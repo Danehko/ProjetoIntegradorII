@@ -10,12 +10,13 @@ from robo import *
 from SensorLum import *
 from enum import Enum
 
-class mapa:
+class Mapa:
     def __init__(self):
         self.numCacas = 0
         self.numRobo = 0
-        self.tamMapa 
-        self.mapa
+        self.casas[10][10]
+
+
 
 
 
