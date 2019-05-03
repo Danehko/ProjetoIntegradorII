@@ -12,19 +12,56 @@ from SensorLum import *
 from enum import Enum
 
 class Coordenadas:
-    def __init__(self):
-        self.posx = 0
-        self.posy = 0
-        self.eixo = 0
+    def __init__(self,posx,posy,ref):
+        self.posx = posx
+        self.posy = posy
+        self.referencia = ref
 
     def enviarCoordenadas(self):
-        return self.posx +':'+ self.posy +':'+ self.eixo
+        return (posx,posy)
 
-    def virarEixo(self, dir):
-        if(self.eixo == 0):
-            self.eixo = 1
-            return true
-        elif(self.eixo == 1):
-            self.eixo = 0
-            return true
-        return false
+    def trocandoPos(self, dir):
+        if(dir=='frente'):
+            if(self.referencia=='N'):
+                self.posx = self.posx + 1
+            elif(self.referencia=='S'):
+                self.posx = self.posx - 1
+            elif (self.referencia == 'L'):
+                self.posy = self.posy + 1
+            elif (self.referencia == 'O'):
+                self.posy = self.posy - 1
+        elif(dir=='retornar'):
+            if (self.referencia == 'N'):
+                self.posx = self.posx - 1
+            elif (self.referencia == 'S'):
+                self.posx = self.posx + 1
+            elif (self.referencia == 'L'):
+                self.posy = self.posy - 1
+            elif (self.referencia == 'O'):
+                self.posy = self.posy + 1
+        elif (dir == 'direita'):
+            if (self.referencia == 'N'):
+                self.posy = self.posy + 1
+                self.referencia = 'L'
+            elif (self.referencia == 'S'):
+                self.posy = self.posy - 1
+                self.referencia = 'O'
+            elif (self.referencia == 'L'):
+                self.posx = self.posx - 1
+                self.referencia = 'S'
+            elif (self.referencia == 'O'):
+                self.posx = self.posx + 1
+                self.referencia = 'N'
+        elif (dir == 'esquerda'):
+            if (self.referencia == 'N'):
+                self.posy = self.posy - 1
+                self.referencia = 'O'
+            elif (self.referencia == 'S'):
+                self.posy = self.posy + 1
+                self.referencia = 'L'
+            elif (self.referencia == 'L'):
+                self.posx = self.posx + 1
+                self.referencia = 'N'
+            elif (self.referencia == 'O'):
+                self.posx = self.posx - 1
+                self.referencia = 'S'
