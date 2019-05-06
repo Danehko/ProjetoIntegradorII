@@ -2,23 +2,22 @@
 from robo import *
 
 
-direcao = input("Bem Vindo(a)! Entre com a direção que deseja movimentar o robô:\-A para frente.\-B para trás.\-C para esquerda.\-D para direita.")
-robot = robo('outA', 'outD', 200,0,0,'N')
-
+direcao = ''
+robot = Robo('outA', 'outD', 200,0,0,'N')
 
 while (direcao != "exit"):
-	direcao = input("Entre com a direção que deseja movimentar o robô:\-A para frente.\-B para trás.\-C para esquerda.\-D para direita.")
+	direcao = input('Entre com a direcao que deseja movimentar o robo:\n A para frente.\n B para tras.\n C para esquerda.\n D para direita.\n')
 
 	if direcao == 'a':
-		robot.setManual("frente")
+		robot.setFrente()
 		print('indo pra frente')
 	elif direcao == 'b':
-		robot.setManual("retornar")
-		print('indo pra trás')
+		robot.setRetornar()
+		print('indo pra tras')
 	elif direcao == 'c':
-		robot.setManual("esquerda")
+		robot.setEsquerda()
 		print('indo pra esquerda')
 	elif direcao == 'd':
-		robot.setManual("direita")
+		robot.setDireita()
 		print('indo pra direita')
 
