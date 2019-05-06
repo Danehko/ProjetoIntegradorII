@@ -3,7 +3,7 @@ from robo import *
 
 
 direcao = input("Bem Vindo(a)! Entre com a direção que deseja movimentar o robô:\-A para frente.\-B para trás.\-C para esquerda.\-D para direita.")
-robot = Robo()
+robot = robo('outA', 'outD', 200,0,0,'N')
 
 
 while (direcao != "exit"):
