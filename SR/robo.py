@@ -13,8 +13,125 @@ class Robo:
         self.l = LargeMotor(motorA)
         self.r = LargeMotor(motorB)
         self.cl = ColorSensor()
-        self.colors = ('unknown', 'black', 'blue', 'green', 'yellow', 'red', 'white', 'brown')
+        self.colors = ('unknown', 'black', 'blue', 'green', 'yellow', 'red' 'white', 'brown')
 
+    def auto(self,_lista):
+        while(len(_lista)!=0):
+            x,y = _lista.pop(0)
+            aux1 = self.coordenadas.posx - x
+            if(aux1<0):
+                aux1= aux1 * (-1)
+            aux2 = self.coordenadas.posy - y
+            if(aux2<0):
+                aux2= aux2 * (-1)
+            if(aux1<aux2):
+                while((self.coordenadas.posx!=x)and(self.coordenadas.posy!=y)):
+                    if(self.coordenadas.posx > x):
+                        if (self.referencia == 'N'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                        elif (self.referencia == 'S'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                        elif (self.referencia == 'L'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                        elif (self.referencia == 'O'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                    elif(self.coordenadas.posx < x):
+                        if (self.referencia == 'N'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                        elif (self.referencia == 'S'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                        elif (self.referencia == 'L'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                        elif (self.referencia == 'O'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                    elif (self.coordenadas.posy > y):
+                        if (self.referencia == 'N'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                        elif (self.referencia == 'S'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                        elif (self.referencia == 'L'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                        elif (self.referencia == 'O'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                    elif (self.coordenadas.posy < y):
+                        if (self.referencia == 'N'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                        elif (self.referencia == 'S'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                        elif (self.referencia == 'L'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                        elif (self.referencia == 'O'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+            else:
+                while ((self.coordenadas.posx != x) and (self.coordenadas.posy != y)):
+                    if (self.coordenadas.posy > y):
+                        if (self.referencia == 'N'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                        elif (self.referencia == 'S'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                        elif (self.referencia == 'L'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                        elif (self.referencia == 'O'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                    elif (self.coordenadas.posy < y):
+                        if (self.referencia == 'N'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                        elif (self.referencia == 'S'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                        elif (self.referencia == 'L'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                        elif (self.referencia == 'O'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                    elif (self.coordenadas.posx < x):
+                        if (self.referencia == 'N'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                        elif (self.referencia == 'S'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                        elif (self.referencia == 'L'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
+                        elif (self.referencia == 'O'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                    elif (self.coordenadas.posx > x):
+                        if (self.referencia == 'N'):
+                            self.setRetornar()
+                            self.coordenadas.trocandoPos('retornar')
+                        elif (self.referencia == 'S'):
+                            self.setFrente()
+                            self.coordenadas.trocandoPos('frente')
+                        elif (self.referencia == 'L'):
+                            self.setEsquerda()
+                            self.coordenadas.trocandoPos('esquerda')
+                        elif (self.referencia == 'O'):
+                            self.setDireita()
+                            self.coordenadas.trocandoPos('direits')
     def setVol(self):
         return self.velocidade
 

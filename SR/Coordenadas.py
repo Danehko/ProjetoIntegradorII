@@ -33,12 +33,16 @@ class Coordenadas:
         elif(dir=='retornar'):
             if (self.referencia == 'N'):
                 self.posx = self.posx - 1
+                self.referencia = 'S'
             elif (self.referencia == 'S'):
                 self.posx = self.posx + 1
+                self.referencia = 'N'
             elif (self.referencia == 'L'):
                 self.posy = self.posy - 1
+                self.referencia ='O'
             elif (self.referencia == 'O'):
                 self.posy = self.posy + 1
+                self.referencia = 'L'
         elif (dir == 'direita'):
             if (self.referencia == 'N'):
                 self.posy = self.posy + 1
