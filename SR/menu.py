@@ -38,8 +38,9 @@ elif(modo==2):
 		seq = int(input('Digite o número de repetições'))
 		cont = 0
 		while(seq!=cont):
-			print('Movimento numero '+str(cont)+' de '+str(seq))
+			print('Movimento numero '+str(cont+1)+' de '+str(seq))
 			x = int(input('Por favor insira a coordenada x:'))
 			y = int(input('Por favor insira a coordenada y:'))
 			_loc.append((x,y))
+			cont = cont + 1
 
