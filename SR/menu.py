@@ -2,17 +2,17 @@
 from robo import *
 
 print('Bem vindo')
-print('Lembrando aue o mapa do jogo é quadrado (10x10), portanto é somente aceito 0-9')
-print('Por favor insira a localização do Robô')
+print('Lembrando que o mapa do jogo e quadrado (10x10), portanto e somente aceito 0-9')
+print('Por favor insira a localizacao do Robo')
 posx = int(input('Eixo x:'))
 posy = int(input('Eixo y:'))
-modo = int(input('Digite 1 para modo munual ou dois para modo autonomo'))
-if(modo==1):
-	direcao = ''
-	robot = Robo('outA', 'outD', 200,0,0,'N')
+modo = int(input('Digite 1 para modo munual ou 2 para modo autonomo\n'))
+direcao = ''
+robot = Robo('outA', 'outD', 200,0,0,'N')
 
+if(modo==1):
 	while (direcao != "exit"):
-		direcao = input('Entre com a direcao que deseja movimentar o robo:\n A para frente.\n B para tras.\n C para esquerda.\n D para direita.\n')
+		direcao = input('Entre com a direcao que deseja movimentar o robo:\n (a) para frente.\n (b) para tras.\n (c) para esquerda.\n (d) para direita.\n')
 
 		if direcao == 'a':
 			robot.setFrente()
@@ -28,14 +28,15 @@ if(modo==1):
 			print('indo pra direita')
 elif(modo==2):
 	_loc = []
-	opcao = int(input('Digite 1 para seguir somente um comando ou 2 para n'))
+	opcao = int(input('Digite 1 para seguir somente um comando ou 2 para n\n'))
 	if(opcao==1):
 		print('Ir para')
 		x=int(input('x:'))
-		y=int(input('x:'))
+		y=int(input('y:'))
 		_loc.append((x,y))
+		robot.auto(_loc)
 	elif(opcao==2):
-		seq = int(input('Digite o número de repetições'))
+		seq = int(input('Digite o numero de repeticoes\n'))
 		cont = 0
 		while(seq!=cont):
 			print('Movimento numero '+str(cont+1)+' de '+str(seq))
@@ -43,4 +44,4 @@ elif(modo==2):
 			y = int(input('Por favor insira a coordenada y:'))
 			_loc.append((x,y))
 			cont = cont + 1
-
+		robot.auto(_loc)
