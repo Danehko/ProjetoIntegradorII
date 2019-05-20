@@ -5,7 +5,7 @@ class Partida:
         self._listaDeTesouro = []        # lista com a localização das caças
         self._localizacaoRobo = []       # lista com a localização dos robos
         self.pausa = 0                   # se pausa for igual a 1 o jogo é pausado
-        self.inicio = 0                  # se inicio for igual 1 o jogo começou
+        self.inicio = 0                 # se inicio for igual 1 o jogo começou
 
     def pause(self):
         if(self.pausa==0):

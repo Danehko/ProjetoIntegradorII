@@ -1,21 +1,8 @@
-#!/usr/bin/env python3
-from itertools import chain
-import codecs
-import collections
-import copy
-import random
-import struct
-import sys
-import socket
-from robo import *
-from SensorLum import *
-from enum import Enum
-
 class Coordenadas:
-    def __init__(self,posx,posy,ref):
+    def __init__(self,posx,posy,ref,tam):
         self.posx = posx
         self.posy = posy
-        self.referencia = ref
+        self.referencia = ref        
 
     def enviarCoordenadas(self):
         return (self.posx,self.posy)
