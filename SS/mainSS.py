@@ -1,6 +1,7 @@
 print('Sistema Supervisorio - Iniciado')
 print('Bem vindo')
-versao = input('Se o SA ja foi implementado digite (True) caso contrario digite (False)\n')
+#versao = input('Se o SA ja foi implementado digite (True) caso contrario digite (False)\n')
+versao = False
 
 ip = input('Digite o ip do Sistema Supervisorio\n')
 porta = int(input('Digite a porta de conexão:\n'))

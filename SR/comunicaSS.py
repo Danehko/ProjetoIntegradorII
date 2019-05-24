@@ -8,7 +8,7 @@ class Comunica_SS:
         
     def conectar(self, nome):
         msg = '2:' + nome
-        msg = msg.encode()
+        msg = msg.encode()-
         self.saida.sendto(msg, (self.ipSS, self.portSS))
         
     def atualizarPos(self,posicao):

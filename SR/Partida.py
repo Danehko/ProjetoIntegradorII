@@ -2,6 +2,7 @@ class Partida:
     _listaDeTesouro
     _localizacaoRobo
     def __init__(self):
+        self.modoDeUso
         self._listaDeTesouro = []        # lista com a localização das caças
         self._localizacaoRobo = []       # lista com a localização dos robos
         self.pausa = 0                   # se pausa for igual a 1 o jogo é pausado
@@ -19,14 +20,22 @@ class Partida:
         elif (self.inicio == 1):
             self.inicio = 0
 
-    def addTesouro(self, posx, posy):
-        self._listaDeTesouro.append((posx,posy))
-
-    def addLocRobo(self, posx, posy):
-        self._localizacaoRobo.append((posx, posy))
-
-    def removerTesouro(self, posx, posy):
-        self._listaDeTesouro.remove((posx,posy))
-
-    def removerRobo(self, posx, posy):
-        self._localizacaoRobo.remove((posx,posy))
+    def atualizarMapa(self, tam, _listates, _listaloc, inicio, pausa):
+        self._listaDeTesouro = _listates
+        self._localizacaoRobo = _listaloc
+        self.inicio = inicio
+        self.pausa = pausa
+        
+    def informarMapa(self):
+        retorno = str(len(self._listaDeTesouro))
+        cont = 0
+        while(cont != len(self._listaDeTesouro)):
+            retorno = retorno + ':' + str(self._listaDeTesouro[cont][0]) + ',' + str(self._listaDeTesouro[cont][1])
+            cont = cont + 1
+        retorno = retorno + ':' + str(len(self._localizacaoRobo))
+        cont = 0
+        while(cont != len(self._localizacaoRobo)):
+            retorno = retorno + ':' + str(self._localizacaoRobo[cont][0]) + ',' + str(self._localizacaoRobo[cont][1])
+            cont = cont + 1
+        retorno = retorno + ':' + str(self.equipe1) + ':' + str(self.equipe2) + ':' + str(self.inicio)
+        return retorno
