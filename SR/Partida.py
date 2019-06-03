@@ -1,8 +1,6 @@
 class Partida:
-    _listaDeTesouro
-    _localizacaoRobo
     def __init__(self):
-        self.modoDeUso
+        self.modoDeUso = 0
         self._listaDeTesouro = []        # lista com a localização das caças
         self._localizacaoRobo = []       # lista com a localização dos robos
         self.pausa = 0                   # se pausa for igual a 1 o jogo é pausado

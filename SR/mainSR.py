@@ -10,14 +10,14 @@ print('Lembrando que o mapa do jogo e quadrado (7x7), portanto e somente aceito 
 print('Por favor insira a localizacao do Robo')
 posx = int(input('Eixo x:'))
 posy = int(input('Eixo y:'))
-orien = input('Digite a orientacao do Robo \n (N) - Norte \n (S) - Sul \n (L) - Leste \n (O) - Oeste')
+orien = input('Digite a orientacao do Robo \n (N) - Norte \n (S) - Sul \n (L) - Leste \n (O) - Oeste \n' )
 robot = Robo('outA', 'outD', 200 , posx, posy, orien)
 localidades = []
 localidades.append((0,1))
 localidades.append((2,2))
 robot.partida._localizacaoRobo = localidades
 
-if(versao == True):
+if(versao == 'True'):
     ip = input('Digite o ip do Robo:\n')
     porta = int(input('Digite a porta de conexao:\n'))
     ipSS = input('Digite o ip do Sistema Supervisor:\n')
@@ -29,7 +29,7 @@ if(versao == True):
     #while(msg != 'Partida encerrada'):
     #    msg = recebeSS.start()
 
-if(versao == False):
+if(versao == 'False'):
     modo = int(input('Digite 1 para modo munual ou 2 para modo autonomo\n'))
     if(modo==1):
         direcao = ''
