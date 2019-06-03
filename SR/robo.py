@@ -1,5 +1,6 @@
 #!/usr/bin/env pynthon3
 from ev3dev.ev3 import *
+from Partida import *
 from Coordenadas import *
 from time import sleep
 
@@ -10,6 +11,7 @@ class Robo:
         self.coordenadas = Coordenadas(posx,posy,ref)
         self.modoDeJogo = 0  # mododeJogo igual a 0 para modo autonomo e 1 para modo manual
         self.velocidade = velocidade
+        self.partida = Partida()
         self.l = LargeMotor(motorA)
         self.r = LargeMotor(motorB)
         self.cl = ColorSensor()
@@ -149,6 +151,114 @@ class Robo:
         self.r.stop(stop_action="hold")
         self.l.stop(stop_action="hold")
 
+    def autoEsquerda(self):
+        x, y = self.coordenadas.trocandoPos('esquerda')
+        if(((x,y)in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
+            x,y = self.coordenadas.trocandoPos('frente')
+            if(((x,y)in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
+                x,y = self.coordenadas.trocandoPos('retornaar')
+                if(((x,y)in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
+                    x,y = self.coordenadas.trocandoPos('direita')
+                    if(((x,y)in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
+                        print('Cercado')
+                    else:
+                        self.coordenadas.trocarPosicao(x, y)
+                        self.setDireita()
+                        print(self.coordenadas.enviarCoordenadas())
+                else:
+                    self.coordenadas.trocarPosicao(x, y)
+                    self.setRetornar()
+                    print(self.coordenadas.enviarCoordenadas())
+            else:
+                self.coordenadas.trocarPosicao(x, y)
+                self.setFrente()
+                print(self.coordenadas.enviarCoordenadas())
+        else:
+            self.coordenadas.trocarPosicao(x,y)
+            self.setEsquerda()
+            print(self.coordenadas.enviarCoordenadas())
+
+    def autoDireita(self):
+        x, y = self.coordenadas.trocandoPos('direita')
+        if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+            x, y = self.coordenadas.trocandoPos('retornar')
+            if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                x, y = self.coordenadas.trocandoPos('frente')
+                if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                    x, y = self.coordenadas.trocandoPos('esqerda')
+                    if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                        print('Cercado')
+                    else:
+                        self.coordenadas.trocarPosicao(x, y)
+                        self.setEsquerda()
+                        print(self.coordenadas.enviarCoordenadas())
+                else:
+                    self.coordenadas.trocarPosicao(x, y)
+                    self.setFrente()
+                    print(self.coordenadas.enviarCoordenadas())
+            else:
+                self.coordenadas.trocarPosicao(x, y)
+                self.setRetornar()
+                print(self.coordenadas.enviarCoordenadas())
+        else:
+            self.coordenadas.trocarPosicao(x, y)
+            self.setDireita()
+            print(self.coordenadas.enviarCoordenadas())
+
+    def autoFrente(self):
+        x, y = self.coordenadas.trocandoPos('frente')
+        if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+            x, y = self.coordenadas.trocandoPos('direita')
+            if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                x, y = self.coordenadas.trocandoPos('esquerda')
+                if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                    x, y = self.coordenadas.trocandoPos('retornar')
+                    if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                        print('Cercado')
+                    else:
+                        self.coordenadas.trocarPosicao(x, y)
+                        self.setRetornar()
+                        print(self.coordenadas.enviarCoordenadas())
+                else:
+                    self.coordenadas.trocarPosicao(x, y)
+                    self.setEsquerda()
+                    print(self.coordenadas.enviarCoordenadas())
+            else:
+                self.coordenadas.trocarPosicao(x, y)
+                self.setDireita()
+                print(self.coordenadas.enviarCoordenadas())
+        else:
+            self.coordenadas.trocarPosicao(x, y)
+            self.setFrente()
+            print(self.coordenadas.enviarCoordenadas())
+
+    def autoRetornar(self):
+        x, y = self.coordenadas.trocandoPos('retornar')
+        if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+            x, y = self.coordenadas.trocandoPos('esquerda')
+            if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                x, y = self.coordenadas.trocandoPos('direita')
+                if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                    x, y = self.coordenadas.trocandoPos('frente')
+                    if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+                        print('Cercado')
+                    else:
+                        self.coordenadas.trocarPosicao(x, y)
+                        self.setFrente()
+                        print(self.coordenadas.enviarCoordenadas())
+                else:
+                    self.coordenadas.trocarPosicao(x, y)
+                    self.setDireita()
+                    print(self.coordenadas.enviarCoordenadas())
+            else:
+                self.coordenadas.trocarPosicao(x, y)
+                self.setEsquerda()
+                print(self.coordenadas.enviarCoordenadas())
+        else:
+            self.coordenadas.trocarPosicao(x, y)
+            self.setRetornar()
+            print(self.coordenadas.enviarCoordenadas())
+
     def auto(self,_lista):
         while(len(_lista)!=0):
             print(len(_lista))
@@ -163,72 +273,40 @@ class Robo:
                         xablau = False
                     elif(self.coordenadas.posx > x):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                     elif(self.coordenadas.posx < x):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                     elif(self.coordenadas.posy > y):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                     elif(self.coordenadas.posy < y):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
             else:
                 while(xablau):
                     print(self.coordenadas.posx, self.coordenadas.posy)
@@ -236,70 +314,37 @@ class Robo:
                         xablau = False
                     elif(self.coordenadas.posy > y):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                     elif(self.coordenadas.posy < y):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                     elif(self.coordenadas.posx > x):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoRetornar()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                     elif(self.coordenadas.posx < x):
                         if(self.coordenadas.referencia == 'N'):
-                            self.setDireita()
-                            self.coordenadas.trocandoPos('direita')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoDireita()
                         elif(self.coordenadas.referencia == 'S'):
-                            self.setEsquerda()
-                            self.coordenadas.trocandoPos('esquerda')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoEsquerda()
                         elif(self.coordenadas.referencia == 'L'):
-                            self.setFrente()
-                            self.coordenadas.trocandoPos('frente')
-                            print(self.coordenadas.enviarCoordenadas())
+                            self.autoFrente()
                         elif(self.coordenadas.referencia == 'O'):
-                            self.setRetornar()
-                            self.coordenadas.trocandoPos('retornar')
-                            print(self.coordenadas.enviarCoordenadas())
-
+                            self.autoRetornar()
