@@ -6,8 +6,8 @@ class Comunica_SS:
         self.portSS = portaSS
         self.saida = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
-    def conectar(self, nome):
-        msg = '2:' + nome
+    def conectar(self, nome, posx, posy):
+        msg = '2:' + nome + ':' + posx + ':' + posy
         msg = msg.encode()
         self.saida.sendto(msg, (self.ipSS, self.portSS))
         

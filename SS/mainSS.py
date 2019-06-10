@@ -9,6 +9,7 @@ porta = int(input('Digite a porta de conexão:\n'))
 ipSA = input('Digite o ip do Sistema Arbitrario:\n')
 portaSA = int(input('Digite a porta de conexão do Sistema Arbitrario:\n'))
 
+
 #recebeSR.start()
 
 

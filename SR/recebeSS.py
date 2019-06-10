@@ -1,7 +1,7 @@
 import socket
 from threading import Thread
 
-class Recebe_SR (Thread):
+class Recebe_SS (Thread):
 
     def __init__(self):
         super().__init__()

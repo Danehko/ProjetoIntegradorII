@@ -1,33 +1,19 @@
 #!/usr/bin/env python3
 from robo import *
+from recebeSS import *
 from comunicaSS import *
 
 print('Robo - Iniciado')
 print('Bem vindo')
 versao = input('Se o SS ja foi implementado digite (True) caso contrario digite (False)\n')
 nome = input('Digite o nome do Robo:\n')
+
 print('Lembrando que o mapa do jogo e quadrado (7x7), portanto e somente aceito 0-6')
 print('Por favor insira a localizacao do Robo')
 posx = int(input('Eixo x:'))
 posy = int(input('Eixo y:'))
 orien = input('Digite a orientacao do Robo \n (N) - Norte \n (S) - Sul \n (L) - Leste \n (O) - Oeste \n' )
 robot = Robo('outA', 'outD', 200 , posx, posy, orien)
-localidades = []
-localidades.append((0,1))
-localidades.append((2,2))
-robot.partida._localizacaoRobo = localidades
-
-if(versao == 'True'):
-    ip = input('Digite o ip do Robo:\n')
-    porta = int(input('Digite a porta de conexao:\n'))
-    ipSS = input('Digite o ip do Sistema Supervisor:\n')
-    portaSS = int(input('Digite a porta de conexão do Sistema Supervisor:\n'))
-    comunicaSS = Comunica_SS()
-    comunicaSS.conectar(ip, porta)
-    #recebeSS.start()
-    #msg = ''
-    #while(msg != 'Partida encerrada'):
-    #    msg = recebeSS.start()
 
 if(versao == 'False'):
     modo = int(input('Digite 1 para modo munual ou 2 para modo autonomo\n'))
@@ -66,3 +52,20 @@ if(versao == 'False'):
                 _loc.append((x,y))
                 cont = cont + 1
             robot.auto(_loc)
+
+
+if(versao == 'True'):
+    ip = input('Digite o ip do Robo:\n')
+    porta = int(input('Digite a porta de conexao:\n'))
+    ipSS = input('Digite o ip do Sistema Supervisor:\n')
+    portaSS = int(input('Digite a porta de conexão do Sistema Supervisor:\n'))
+
+    comunicaSS = Comunica_SS()
+    comunicaSS.conectar(ip, porta)
+
+    recebe = RecebeSS()
+    recebe.start()
+    #msg = ''
+    #while(msg != 'Partida encerrada'):
+    #    msg = recebeSS.start()
+
