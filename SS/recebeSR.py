@@ -1,33 +1,24 @@
-import socket
-from threading import Thread
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import zmq, sys
 
-class Recebe_SR (Thread):
-
-    def __init__(self, ipSR, portaSR):
-        super().__init__()
-        self.ip = "0.0.0.0"
-        self.port = 6000
-        self.ipSR = ipSR
-        self.portSR = portaSR
-        self._conectar()
-   
-    def _conectar(self):
-        self.entrada = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.entrada.bind((self.ip,self.port))
-        self.sr, self.sr_addres = self.entrada.accept()
+class Recebe_SR ():
+    def __init__(self,ip,port):
+        self.ip = ip
+        self.port = port
       
     def _recebe(self):
-        self.laco = True
-        while(self.laco):
-            try:
-                mensagem = self.sr.recv(1024).decode()
-                self.tratando(mensagem)
-            except Exception as e:
-                print(e)
-               
-    def run(self):
-        self.recebe()
-               
+        context = zmq.Context()
+        s = context.socket(zmq.SUB)  # create a subscriber socket
+        HOST = sys.argv[1] if len(sys.argv) > 1 else self.ip #String
+        PORT = sys.argv[2] if len(sys.argv) > 2 else self.porta #String
+        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
+        s.connect(p)  # connect to the server
+        s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
+        for i in range(5):  # Five iterations
+            time = s.recv()  # receive a message
+            print(time.decode())
+
     def _tratando(self, mensagem):
         dados = mensagem[0]
         dados = dados.split(':')
@@ -54,3 +45,6 @@ class Recebe_SR (Thread):
 
 2:
 '''
+
+
+
