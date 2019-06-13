@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import zmq, sys
+from threading import Thread
 
-class Recebe_SR ():
-    def __init__(self,ip,port):
+class Recebe_SR(Thread):
+    def __init__(self,ip,port,mapa):
+        super().__init__()
         self.ip = ip
         self.port = port
+        self._connect = False
+        self.mapa = mapa
+
+    def run(self):
+        self._recebe()
       
     def _recebe(self):
         context = zmq.Context()
@@ -15,9 +22,8 @@ class Recebe_SR ():
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         s.connect(p)  # connect to the server
         s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
-        for i in range(5):  # Five iterations
-            time = s.recv()  # receive a message
-            print(time.decode())
+        dados = s.recv()  # receive a message
+        self._tratando(dados)
 
     def _tratando(self, mensagem):
         dados = mensagem[0]
@@ -29,7 +35,13 @@ class Recebe_SR ():
         elif(dados[0] == '2'):
             id = dados[1]
             pos = dados[2].split(',')
-            coord = (int(pos[0]),int(pos[1]))   
+            coord = (int(pos[0]),int(pos[1]))
+            self._connect = True
+            self.partida._localizacaoRobo.append(coord)
+
+
+    def isConnect(self):
+        return self._connect
                         
 '''    
 0:posx:posy

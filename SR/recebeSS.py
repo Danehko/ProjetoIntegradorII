@@ -3,7 +3,7 @@
 import zmq, sys
 
 class Recebe_SS:
-    def __init__(self,ip,port):
+    def __init__(self,ip,port,partida):
         self.ip = ip
         self.port = port
       

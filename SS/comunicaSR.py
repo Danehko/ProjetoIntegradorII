@@ -4,10 +4,9 @@ import zmq
 
 class Comunica_SR:
 
-    def __init__(self, ipSR, portaSR, partida):
+    def __init__(self, ipSR, portaSR):
         self.ipSR = ipSR
         self.portSR = portaSR
-        self.partida = partida
 
     def naoAutenticar(self):
         msg = '0:NOK'
