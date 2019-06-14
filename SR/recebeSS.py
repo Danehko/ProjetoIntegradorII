@@ -6,6 +6,8 @@ class Recebe_SS:
     def __init__(self,ip,port,partida):
         self.ip = ip
         self.port = port
+        self.partida = partida
+        self.movendo = 'nao'
       
     def _recebe(self):
         context = zmq.Context()
@@ -21,22 +23,26 @@ class Recebe_SS:
             self._tratando(dados)
                
     def _tratando(self, mensagem):
-
         dados = mensagem[0]
         dados = dados.split(':')
-        if(dados[0] == '0'): #
-
+        if(dados[0] == '0'):
+            print('Autenticado')
         elif(dados[0] == '1'): #
-
+            print('Nao autenticado')
         elif(dados[0] == '2'): #
-
+            self.partida.receberMapa(mensagem[0][2:len(mensagem[0])])
+            self.partida.inicio()
         elif (dados[0] == '3'): #
-
+            self.movendo = dados[1]
         elif (dados[0] == '4'): #
-
+            self.partida.receber(mensagem[0][2:len(mensagem[0])])
         elif (dados[0] == '5'): #
-
+            self.partida.pause()
         elif (dados[0] == '6'): #
-
+            self.partida.inicio()
         elif (dados[0] == '7'): #
+            print(dados[1])
+
+    def isMovendo(self):
+        return self.movendo
 

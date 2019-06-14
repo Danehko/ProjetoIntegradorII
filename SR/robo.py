@@ -16,6 +16,7 @@ class Robo:
         self.r = LargeMotor(motorB)
         self.cl = ColorSensor()
         self.colors = ('unknown', 'black', 'blue', 'green', 'yellow', 'red', 'white', 'brown')
+        self.enviar = 0
 
     def setVol(self):
         return self.velocidade
@@ -154,38 +155,42 @@ class Robo:
     def autoEsquerda(self):
         x, y = self.coordenadas.trocandoPos('esquerda')
         if(((x,y)in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
-            self.autoFrente()
+            pass
         else:
             self.coordenadas.trocarPosicao(x,y)
             self.setEsquerda()
             print(self.coordenadas.enviarCoordenadas())
+            self.enviar = 1
 
     def autoDireita(self):
         x, y = self.coordenadas.trocandoPos('direita')
         if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
-            self.autoRetornar()
+            pass
         else:
             self.coordenadas.trocarPosicao(x, y)
             self.setDireita()
             print(self.coordenadas.enviarCoordenadas())
+            self.enviar = 1
 
     def autoFrente(self):
         x, y = self.coordenadas.trocandoPos('frente')
         if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
-            self.autoDireita()
+            pass
         else:
             self.coordenadas.trocarPosicao(x, y)
             self.setFrente()
             print(self.coordenadas.enviarCoordenadas())
+            self.enviar = 1
 
     def autoRetornar(self):
         x, y = self.coordenadas.trocandoPos('retornar')
         if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
-            self.autoEsquerda()
+            pass
         else:
             self.coordenadas.trocarPosicao(x, y)
             self.setRetornar()
             print(self.coordenadas.enviarCoordenadas())
+            self.enviar = 1
 
     def auto(self,_lista):
         while(len(_lista)!=0):
@@ -199,6 +204,7 @@ class Robo:
                     print(self.coordenadas.posx, self.coordenadas.posy)
                     if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
                         xablau = False
+                        self.enviar = 2
                     elif(self.coordenadas.posx > x):
                         if(self.coordenadas.referencia == 'N'):
                             self.autoEsquerda()
@@ -240,6 +246,7 @@ class Robo:
                     print(self.coordenadas.posx, self.coordenadas.posy)
                     if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
                         xablau = False
+                        self.enviar = 2
                     elif(self.coordenadas.posy > y):
                         if(self.coordenadas.referencia == 'N'):
                             self.autoRetornar()

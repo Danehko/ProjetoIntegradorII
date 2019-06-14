@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-from robo import *
-from recebeSS import *
-from comunicaSS import *
+from SR.robo import *
+from SR.recebeSS import *
+from SR.comunicaSS import *
+from SR.Partida import *
 
 print('Robo - Iniciado')
 print('Bem vindo')
@@ -13,7 +14,7 @@ print('Por favor insira a localizacao do Robo')
 posx = int(input('Eixo x:'))
 posy = int(input('Eixo y:'))
 orien = input('Digite a orientacao do Robo \n (N) - Norte \n (S) - Sul \n (L) - Leste \n (O) - Oeste \n' )
-robot = Robo('outA', 'outD', 200 , posx, posy, orien)
+robot = Robo('outA', 'outD', 200, posx, posy, orien)
 
 if(versao == 'False'):
     modo = int(input('Digite 1 para modo munual ou 2 para modo autonomo\n'))
@@ -53,19 +54,47 @@ if(versao == 'False'):
                 cont = cont + 1
             robot.auto(_loc)
 
-
 if(versao == 'True'):
     ip = input('Digite o ip do Robo:\n')
     porta = int(input('Digite a porta de conexao:\n'))
     ipSS = input('Digite o ip do Sistema Supervisor:\n')
-    portaSS = int(input('Digite a porta de conexão do Sistema Supervisor:\n'))
+    portaSS = int(input('Digite a porta de conexao do Sistema Supervisor:\n'))
+    partida = Partida()
 
-    comunicaSS = Comunica_SS()
-    comunicaSS.conectar(ip, porta)
+    comunica = Comunica_SS(ipSS,portaSS)
+    recebe = Recebe_SS(ip,porta,partida)
 
-    recebe = RecebeSS()
     recebe.start()
-    #msg = ''
-    #while(msg != 'Partida encerrada'):
-    #    msg = recebeSS.start()
+    comunica.conectar(nome)
 
+    while(self.partida.isInicio() == 0):
+        pass
+
+    while(self.partida.isInicio()== 1):
+        while(self.partida.pausa==1):
+            pass
+        if(self.partida.modoDeUso ==1):
+            mover = recebe.isMovendo()
+            recebe.movend0 = 'nao'
+            if(mover=='Frente'):
+                robot.setFrente()
+                print('indo pra frente')
+            elif(mover=='Retornar'):
+                robot.setRetornar()
+                print('indo pra tras')
+            elif(mover=='Esquerda'):
+                robot.setEsquerda()
+                print('indo pra esquerda')
+            elif(mover=='Direita'):
+                robot.setDireita()
+                print('indo pra direita')
+            elif(mover=='nao'):
+                pass
+        elif(self.partida.modoDeUso ==2):
+            robot.auto(self.partida._listaDeTesouro)
+            if(robot.enviar==1):
+                comunica.atualizarPos(robot.coordenadas.enviarCoordenadas())
+                robot.enviar = 0
+            elif(robot.enviar==2):
+                comunica.validarTesouro(robot.coordenadas.enviarCoordenadas())
+                robot.enviar = 0

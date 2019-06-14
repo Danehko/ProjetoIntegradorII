@@ -4,12 +4,12 @@ import zmq, sys
 from threading import Thread
 
 class Recebe_SR(Thread):
-    def __init__(self,ip,port,mapa):
+    def __init__(self,ip,port,partida):
         super().__init__()
         self.ip = ip
         self.port = port
         self._connect = False
-        self.mapa = mapa
+        self.partida = partida
 
     def run(self):
         self._recebe()
@@ -30,15 +30,20 @@ class Recebe_SR(Thread):
         dados = dados.split(':')
         if(dados[0] == '0'):
             tupla = (int(dados[1]),int(dados[2]))
+            self.partida._localizacaoRobo = []
+            self.partida._localizacaoRobo.append(tupla)
         elif(dados[0] == '1'):
             tupla = (int(dados[1]),int(dados[2]))
+            self.partida._localizacaoRobo = []
+            self.partida._localizacaoRobo.append(tupla)
+            if tupla in self.partida._listaDeTesouro:
+                self.partida._listaDeTesouro.remove(tupla)
         elif(dados[0] == '2'):
             id = dados[1]
             pos = dados[2].split(',')
             coord = (int(pos[0]),int(pos[1]))
             self._connect = True
             self.partida._localizacaoRobo.append(coord)
-
 
     def isConnect(self):
         return self._connect

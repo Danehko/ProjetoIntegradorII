@@ -65,9 +65,10 @@ while(condicao):
             if(resp == 1):
                 condicao2 = False
         inicio = partida.informar()
+        partida.inicio()
         envia.iniciarPartida()
         if(adonis==1):
-            while(True):
+            while(partida.isInicio()==1):
                 print('Modo Manual')
                 print('1 - Frente')
                 print('2 - Retornar')
@@ -91,8 +92,7 @@ while(condicao):
                 elif(msg == 5):
                     print('Funcao não implementa - SA')
         elif(adonis==2):
-            while(True):
-            envia.receberAtualização(atualizacao)
-
-
+            while(partida.isInicio()==1):
+                atualizacao = partida.informarMapa()
+                envia.receberAtualização(atualizacao)
 
