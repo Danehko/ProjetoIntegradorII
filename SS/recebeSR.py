@@ -8,19 +8,19 @@ class Recebe_SR(Thread):
         super().__init__()
         self._connect = False
         self.partida = partida
+        context = zmq.Context()
+        self.s = context.socket(zmq.SUB)  # create a subscriber socket
+        HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.1.125" #String
+        PORT = sys.argv[2] if len(sys.argv) > 2 else "50000" #String
+        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
+        self.s.connect(p)  # connect to the server
+        self.s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
 
     def run(self):
         self._recebe()
       
     def _recebe(self):
-        context = zmq.Context()
-        s = context.socket(zmq.SUB)  # create a subscriber socket
-        HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.1.125" #String
-        PORT = sys.argv[2] if len(sys.argv) > 2 else "50000" #String
-        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
-        s.connect(p)  # connect to the server
-        s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
-        dados = s.recv()  # receive a message
+        dados = self.s.recv()  # receive a message
         print(dados.decode())
         self._tratando(dados.decode())
 

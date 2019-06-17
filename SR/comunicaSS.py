@@ -3,6 +3,13 @@
 import zmq, time
 
 class Comunica_SS:
+    def __init__(self):
+        context = zmq.Context()
+        self.s = context.socket(zmq.PUB)  # create a publisher socket
+        HOST = "*"
+        PORT = "50000"
+        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
+        self.s.bind(p)  # bind socket to the address
 
     def conectar(self, nome, posicao):
         msg = '2:' + nome + ':' + str(posicao[0]) + ',' + str(posicao[1])
@@ -17,17 +24,9 @@ class Comunica_SS:
         self.envia(msg)
 
     def envia(self, msg):
-        context = zmq.Context()
-        s = context.socket(zmq.PUB)  # create a publisher socket
-
-        HOST = "*"
-        PORT = "50000"
-
-        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
-        s.bind(p)  # bind socket to the address
         print(msg)
         time.sleep(1)
-        s.send(msg.encode())
+        self.s.send(msg.encode())
 
 
 '''

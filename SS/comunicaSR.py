@@ -3,6 +3,13 @@
 import zmq, time
 
 class Comunica_SR:
+    def __init__(self):
+        context = zmq.Context()
+        self.s = context.socket(zmq.PUB)  # create a publisher socket
+        HOST = "*"
+        PORT = "60000"
+        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
+        self.s.bind(p)  # bind socket to the address
 
     def naoAutenticar(self):
         msg = '0:NOK'
@@ -37,28 +44,7 @@ class Comunica_SR:
         self.envia(msg)
 
     def envia(self,msg):
-        context = zmq.Context()
-        s = context.socket(zmq.PUB)  # create a publisher socket
-
-        HOST = "*"
-        PORT = "60000"
-
-        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
-        s.bind(p)  # bind socket to the address
         print(msg)
         time.sleep(1)
-        s.send(msg.encode())
-
-'''
-- Autentiticar	        SS	SR	Identificação do SS + "|" + mensagem "autenticado"
-- Pausar/continuar	    SS	SR	mensagem de pausa ou continua
-- Iniciar partida	    SS	SR	
-- Movimentar manual	    SS	SR	Direção .
-- Receber atualização	SS	SR	
-- Terminar partida	    SS	SR	mensagem de fim de jogo
-- Declarar Vencedor	    SS	SR	Vencedor
-'''
-
-
-
+        self.s.send(msg.encode())
 
