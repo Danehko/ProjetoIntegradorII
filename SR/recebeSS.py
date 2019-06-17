@@ -27,24 +27,26 @@ class Recebe_SS(Thread):
         self._tratando(dados)
                
     def _tratando(self, mensagem):
-        dados = mensagem[0]
-        dados = dados.split(':')
-        if(dados[0] == '0'):
+        print(mensagem)
+        dados = mensagem.split(':')
+        if(dados[1] == '0'):
+            print('Não Autenticado')
+        elif(dados[1] == '1'): #
             print('Autenticado')
-        elif(dados[0] == '1'): #
-            print('Nao autenticado')
-        elif(dados[0] == '2'): #
-            self.partida.receberMapa(mensagem[0][2:len(mensagem[0])])
+        elif(dados[1] == '2'): #
+            self.partida.receberMapa(dados[2:len(dados)])
             self.partida.inicio()
-        elif (dados[0] == '3'): #
-            self.movendo = dados[1]
-        elif (dados[0] == '4'): #
-            self.partida.receber(mensagem[0][2:len(mensagem[0])])
-        elif (dados[0] == '5'): #
+            print('rato')
+        elif (dados[1] == '3'): #
+            self.movendo = dados[2]
+        elif (dados[1] == '4'): #
+            self.partida.receber(dados[2:len(dados)])
+            print('gato')
+        elif (dados[1] == '5'): #
             self.partida.pause()
-        elif (dados[0] == '6'): #
+        elif (dados[1] == '6'): #
             self.partida.inicio()
-        elif (dados[0] == '7'): #
+        elif (dados[1] == '7'): #
             print(dados[1])
 
     def isMovendo(self):
