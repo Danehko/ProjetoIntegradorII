@@ -55,20 +55,14 @@ if(versao == 'False'):
             robot.auto(_loc)
 
 if(versao == 'True'):
-    ip = input('Digite o ip do Robo:\n')
-    porta = int(input('Digite a porta de conexao:\n'))
-    ipss = input('Digite o ip do Sistema Supervisor:\n')
-    portass = int(input('Digite a porta de conexao do Sistema Supervisor:\n'))
     partida = Partida()
-
-    comunica = Comunica_SS(ip,porta)
-    recebe = Recebe_SS(ipss,portass,partida)
+    comunica = Comunica_SS()
+    recebe = Recebe_SS(partida)
 
     recebe.start()
     comunica.conectar(nome,robot.coordenadas.enviarCoordenadas())
 
     while(partida.isInicio() == 0):
-        print('querendo te')
         pass
 
     while(partida.isInicio()== 1):

@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import zmq
+import zmq, time
 
 class Comunica_SR:
-
-    def __init__(self, ip, porta):
-        self.ip = ip
-        self.port = porta
 
     def naoAutenticar(self):
         msg = '0:NOK'
@@ -44,12 +40,13 @@ class Comunica_SR:
         context = zmq.Context()
         s = context.socket(zmq.PUB)  # create a publisher socket
 
-        HOST = str(self.ip)
-        PORT = str(self.port)
+        HOST = "*"
+        PORT = "60000"
 
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         s.bind(p)  # bind socket to the address
-
+        print(msg)
+        time.sleep(1)
         s.send(msg.encode())
 
 '''

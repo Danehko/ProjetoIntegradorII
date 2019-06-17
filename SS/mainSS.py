@@ -7,19 +7,10 @@ from comunicaSR import *
 print('Sistema Supervisorio - Iniciado')
 print('Bem vindo')
 
-ip = input('Digite o ip do Sistema Supervisorio\n')
-porta = int(input('Digite a porta de recepcao do Sistema Supervisorio:\n'))
-
-ipSR = input('Digite o ip do Robo:\n')
-portaSR = int(input('Digite a porta de recepcao do Robo:\n'))
-
-#ipSA = input('Digite o ip do Sistema Arbitrario:\n')
-#portaSA = int(input('Digite a porta de recepcao do Sistema Arbitrario:\n'))
-
 partida = Partida()
-recebe = Recebe_SR(ipSR,portaSR,partida)
+envia = Comunica_SR()
+recebe = Recebe_SR(partida)
 recebe.start()
-envia = Comunica_SR(ip,porta)
 
 while(not recebe.isConnect()):
     pass

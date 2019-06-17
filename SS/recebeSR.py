@@ -4,10 +4,8 @@ import zmq, sys
 from threading import Thread
 
 class Recebe_SR(Thread):
-    def __init__(self,ip,port,partida):
+    def __init__(self, partida):
         super().__init__()
-        self.ip = ip
-        self.port = port
         self._connect = False
         self.partida = partida
 
@@ -17,12 +15,13 @@ class Recebe_SR(Thread):
     def _recebe(self):
         context = zmq.Context()
         s = context.socket(zmq.SUB)  # create a subscriber socket
-        HOST = sys.argv[1] if len(sys.argv) > 1 else str(self.ip) #String
-        PORT = sys.argv[2] if len(sys.argv) > 2 else str(self.port) #String
+        HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.1.125" #String
+        PORT = sys.argv[2] if len(sys.argv) > 2 else "50000" #String
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         s.connect(p)  # connect to the server
         s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
         dados = s.recv()  # receive a message
+        print(dados.decode())
         self._tratando(dados.decode())
 
     def _tratando(self, mensagem):
@@ -33,7 +32,7 @@ class Recebe_SR(Thread):
             tupla = (int(dados[1]),int(dados[2]))
             self.partida._localizacaoRobo = []
             self.partida._localizacaoRobo.append(tupla)
-        elif(dados[0] == '1'):
+        elif(dados[0] == '1'): # valida
             tupla = (int(dados[1]),int(dados[2]))
             self.partida._localizacaoRobo = []
             self.partida._localizacaoRobo.append(tupla)
@@ -48,21 +47,4 @@ class Recebe_SR(Thread):
 
     def isConnect(self):
         return self._connect
-                        
-'''    
-0:posx:posy
-1:posx:posy
-
-2:id:0,0
-
-
-
-0:Enviar atualização
-
-1:Validar caça
-
-2:
-'''
-
-
 
