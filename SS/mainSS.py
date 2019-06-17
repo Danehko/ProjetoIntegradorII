@@ -1,8 +1,8 @@
 import random
 
-from SS.recebeSR import *
-from SR.Partida import *
-from SS.comunicaSR import *
+from recebeSR import *
+from Partida import *
+from comunicaSR import *
 
 print('Sistema Supervisorio - Iniciado')
 print('Bem vindo')
@@ -17,10 +17,9 @@ portaSR = int(input('Digite a porta de recepcao do Robo:\n'))
 #portaSA = int(input('Digite a porta de recepcao do Sistema Arbitrario:\n'))
 
 partida = Partida()
-recebe = Recebe_SR(ip,porta,partida)
-envia = Comunica_SR(ipSR,portaSR)
-
+recebe = Recebe_SR(ipSR,portaSR,partida)
 recebe.start()
+envia = Comunica_SR(ip,porta)
 
 while(not recebe.isConnect()):
     pass

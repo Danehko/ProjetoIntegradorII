@@ -4,7 +4,7 @@ class Partida:
         self._listaDeTesouro = []        # lista com a localização das caças
         self._localizacaoRobo = []       # lista com a localização dos robos
         self.pausa = 0                   # se pausa for igual a 1 o jogo é pausado
-        self.inicio = 0                 # se inicio for igual 1 o jogo começou
+        self.status = 0                 # se inicio for igual 1 o jogo começou
         self.tam = 7
 
     def pause(self):
@@ -14,15 +14,15 @@ class Partida:
             self.pausa = 0
 
     def inicio(self):
-        if (self.inicio == 0):
-            self.inicio = 1
-        elif (self.inicio == 1):
-            self.inicio = 0
+        if (self.status == 0):
+            self.status = 1
+        elif (self.status == 1):
+            self.status = 0
 
     def atualizarMapa(self, tam, _listates, _listaloc, inicio, pausa):
         self._listaDeTesouro = _listates
         self._localizacaoRobo = _listaloc
-        self.inicio = inicio
+        self.status = inicio
         self.pausa = pausa
         
     def informarMapa(self):
@@ -89,4 +89,4 @@ class Partida:
             contt = contt + 1
 
     def isInicio(self):
-        return self.inicio()
+        return self.status

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from SR.robo import *
-from SR.recebeSS import *
-from SR.comunicaSS import *
-from SR.Partida import *
+from robo import *
+from recebeSS import *
+from comunicaSS import *
+from Partida import *
 
 print('Robo - Iniciado')
 print('Bem vindo')
@@ -57,23 +57,24 @@ if(versao == 'False'):
 if(versao == 'True'):
     ip = input('Digite o ip do Robo:\n')
     porta = int(input('Digite a porta de conexao:\n'))
-    ipSS = input('Digite o ip do Sistema Supervisor:\n')
-    portaSS = int(input('Digite a porta de conexao do Sistema Supervisor:\n'))
+    ipss = input('Digite o ip do Sistema Supervisor:\n')
+    portass = int(input('Digite a porta de conexao do Sistema Supervisor:\n'))
     partida = Partida()
 
-    comunica = Comunica_SS(ipSS,portaSS)
-    recebe = Recebe_SS(ip,porta,partida)
+    comunica = Comunica_SS(ip,porta)
+    recebe = Recebe_SS(ipss,portass,partida)
 
     recebe.start()
-    comunica.conectar(nome)
+    comunica.conectar(nome,robot.coordenadas.enviarCoordenadas())
 
-    while(self.partida.isInicio() == 0):
+    while(partida.isInicio() == 0):
+        print('querendo te')
         pass
 
-    while(self.partida.isInicio()== 1):
-        while(self.partida.pausa==1):
+    while(partida.isInicio()== 1):
+        while(partida.pausa==1):
             pass
-        if(self.partida.modoDeUso ==1):
+        if(partida.modoDeUso ==1):
             mover = recebe.isMovendo()
             recebe.movend0 = 'nao'
             if(mover=='Frente'):
@@ -90,8 +91,8 @@ if(versao == 'True'):
                 print('indo pra direita')
             elif(mover=='nao'):
                 pass
-        elif(self.partida.modoDeUso ==2):
-            robot.auto(self.partida._listaDeTesouro)
+        elif(partida.modoDeUso ==2):
+            robot.auto(partida._listaDeTesouro)
             if(robot.enviar==1):
                 comunica.atualizarPos(robot.coordenadas.enviarCoordenadas())
                 robot.enviar = 0

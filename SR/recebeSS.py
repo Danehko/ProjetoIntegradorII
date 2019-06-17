@@ -1,19 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import zmq, sys
+import zmq
+import sys
+from threading import Thread
 
-class Recebe_SS:
+class Recebe_SS(Thread):
     def __init__(self,ip,port,partida):
+        super().__init__()
         self.ip = ip
         self.port = port
         self.partida = partida
         self.movendo = 'nao'
-      
+
+    def run(self):
+        self._recebe()
+
     def _recebe(self):
         context = zmq.Context()
         s = context.socket(zmq.SUB)  # create a subscriber socket
-        HOST = sys.argv[1] if len(sys.argv) > 1 else self.ip #String
-        PORT = sys.argv[2] if len(sys.argv) > 2 else self.porta #String
+        HOST = sys.argv[1] if len(sys.argv) > 1 else str(self.ip) #String
+        PORT = sys.argv[2] if len(sys.argv) > 2 else str(self.port) #String
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         s.connect(p)  # connect to the server
         s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages

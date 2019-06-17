@@ -4,9 +4,9 @@ import zmq
 
 class Comunica_SR:
 
-    def __init__(self, ipSR, portaSR):
-        self.ipSR = ipSR
-        self.portSR = portaSR
+    def __init__(self, ip, porta):
+        self.ip = ip
+        self.port = porta
 
     def naoAutenticar(self):
         msg = '0:NOK'
@@ -44,8 +44,8 @@ class Comunica_SR:
         context = zmq.Context()
         s = context.socket(zmq.PUB)  # create a publisher socket
 
-        HOST = "*"
-        PORT = "50009"
+        HOST = str(self.ip)
+        PORT = str(self.port)
 
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         s.bind(p)  # bind socket to the address
