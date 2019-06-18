@@ -26,24 +26,26 @@ while(partida.isInicio() == 0):
     pass
 
 while(partida.isInicio() == 1):
-    print('Jogando')
     while(partida.pausa==1):
         pass
-    if(partida.modoDeUso ==1):
+    if(partida.modoDeUso == 1):
         mover = recebe.isMovendo()
-        recebe.movendo = 'nao'
         if(mover=='Frente'):
             robot.setFrente()
             print('indo pra frente')
+            recebe.movendo = 'nao'
         elif(mover=='Retornar'):
             robot.setRetornar()
             print('indo pra tras')
+            recebe.movendo = 'nao'
         elif(mover=='Esquerda'):
             robot.setEsquerda()
             print('indo pra esquerda')
+            recebe.movendo = 'nao'
         elif(mover=='Direita'):
             robot.setDireita()
             print('indo pra direita')
+            recebe.movendo = 'nao'
         elif(mover=='nao'):
             pass
     elif(partida.modoDeUso ==2):

@@ -21,26 +21,36 @@ class Recebe_SS(Thread):
         self._recebe()
 
     def _recebe(self):
-        dados = self.s.recv()  # receive a message
-        print(dados.decode())
-        dados = dados.decode()
-        self._tratando(dados)
+        while(True):
+        	dados = self.s.recv()  # receive a message
+        	dados = dados.decode()
+        	self._tratando(dados)
                
     def _tratando(self, mensagem):
         print(mensagem)
         dados = mensagem.split(':')
+        print(dados[1])
         if(dados[1] == '0'):
             print('Não Autenticado')
         elif(dados[1] == '1'): #
             print('Autenticado')
         elif(dados[1] == '2'): #
-            self.partida.receberMapa(dados[2:len(dados)])
+            nn = dados[2:len(dados)]
+            nm = ':'
+            mensg = nm.join(nn)
+            print(mensg)
+            self.partida.receberMapa(mensg)
             self.partida.inicio()
             print('rato')
         elif (dados[1] == '3'): #
             self.movendo = dados[2]
+            print(self.movendo)
         elif (dados[1] == '4'): #
-            self.partida.receber(dados[2:len(dados)])
+            nn = dados[2:len(dados)]
+            nm = ':'
+            mensg = nm.join(nn)
+            print(mensg)
+            self.partida.receber(mensg)
             print('gato')
         elif (dados[1] == '5'): #
             self.partida.pause()

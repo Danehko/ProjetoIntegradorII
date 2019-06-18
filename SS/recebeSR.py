@@ -20,8 +20,9 @@ class Recebe_SR(Thread):
         self._recebe()
       
     def _recebe(self):
-        dados = self.s.recv()  # receive a message
-        self._tratando(dados.decode())
+        while(True):
+            dados = self.s.recv()  # receive a message
+            self._tratando(dados.decode())
 
     def _tratando(self, mensagem):
         print(mensagem)

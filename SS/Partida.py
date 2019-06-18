@@ -54,39 +54,39 @@ class Partida:
 
     def receber(self,dados):
         self._listaDeTesouro = []
-        recebidos = dados.split(':')
-        contPos = dados[0]
+        self._localizacaoRobo = []
+        dados = dados.split(':')
+        contPos = int(dados[0])
         cont = 1
-        while (contPos != cont - 1):
+        while (contPos != (cont-1)):
+            print(cont)
             pos = dados[cont]
             self._listaDeTesouro.append(pos)
             cont = cont + 1
-        contRobo = dados[cont]
-        contt = 0
-        while (contRobo != contt):
+        contRobo = int(dados[cont])
+        cont = cont + 1
+        while (cont != len(dados)):
             pos = dados[cont]
-            self._listaDeTesouro.append(pos)
+            self._localizacaoRobo.append(pos)
             cont = cont + 1
-            contt = contt + 1
 
     def receberMapa(self,dados):
         self._listaDeTesouro = []
         self._localizacaoRobo = []
-        recebidos = dados.split(':')
-        self.modoDeUso = dados[0]
-        contPos = dados[1]
+        dados = dados.split(':')
+        self.modoDeUso = int(dados[0])
+        contPos = int(dados[1])
         cont = 2
-        while (contPos != cont - 2):
+        while (contPos != (cont - 2)):
             pos = dados[cont]
             self._listaDeTesouro.append(pos)
             cont = cont + 1
-        contRobo = dados[cont]
-        contt = 0
-        while (contRobo != contt):
+        contRobo = int(dados[cont])
+        cont = cont + 1
+        while (cont != len(dados)):
             pos = dados[cont]
             self._localizacaoRobo.append(pos)
             cont = cont + 1
-            contt = contt + 1
 
     def isInicio(self):
         return self.status
