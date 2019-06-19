@@ -43,8 +43,16 @@ class Comunica_SR:
         msg = ':7:vencedor'
         self.envia(msg)
 
+    def confirmarTesouro(self):
+        msg = ':8'
+        self.envia(msg)
+
+    def naoConfirmarTesouro(self):
+        msg = ':9'
+        self.envia(msg)
+
     def envia(self,msg):
-        time.sleep(5)
+        time.sleep(2)
         msg = str("TIME ")+msg
         self.s.send(msg.encode())
 

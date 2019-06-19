@@ -7,6 +7,13 @@ class Partida:
         self.status = 0                 # se inicio for igual 1 o jogo começou
         self.tam = 7
 
+    def zerar(self):
+        self.modoDeUso = 0
+        self._listaDeTesouro = []      
+        self.pausa = 0                   
+        self.status = 0                 
+        self.tam = 7
+
     def pause(self):
         if(self.pausa==0):
             self.pausa = 1
@@ -61,13 +68,15 @@ class Partida:
         while (contPos != (cont-1)):
             print(cont)
             pos = dados[cont]
-            self._listaDeTesouro.append(pos)
+            pos = pos.split(',')
+            self._listaDeTesouro.append((int(pos[0]),int(pos[1])))
             cont = cont + 1
         contRobo = int(dados[cont])
         cont = cont + 1
         while (cont != len(dados)):
             pos = dados[cont]
-            self._localizacaoRobo.append(pos)
+            pos = pos.split(',')
+            self._localizacaoRobo.append((int(pos[0]),int(pos[1])))
             cont = cont + 1
 
     def receberMapa(self,dados):
@@ -79,13 +88,15 @@ class Partida:
         cont = 2
         while (contPos != (cont - 2)):
             pos = dados[cont]
-            self._listaDeTesouro.append(pos)
+            pos = pos.split(',')
+            self._listaDeTesouro.append((int(pos[0]),int(pos[1])))
             cont = cont + 1
         contRobo = int(dados[cont])
         cont = cont + 1
         while (cont != len(dados)):
             pos = dados[cont]
-            self._localizacaoRobo.append(pos)
+            pos = pos.split(',')
+            self._localizacaoRobo.append((int(pos[0]),int(pos[1])))
             cont = cont + 1
 
     def isInicio(self):

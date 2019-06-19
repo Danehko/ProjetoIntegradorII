@@ -24,7 +24,7 @@ class Comunica_SS:
         self.envia(msg)
 
     def envia(self, msg):
-        time.sleep(5)
+        time.sleep(2)
         msg = str("TIME ")+msg
         self.s.send(msg.encode())
 

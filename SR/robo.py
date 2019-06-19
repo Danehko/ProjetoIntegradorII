@@ -193,93 +193,89 @@ class Robo:
             self.enviar = 1
 
     def auto(self,_lista):
-        while(len(_lista)!=0):
-            print(len(_lista))
-            x,y = _lista.pop(0)
-            xablau = True
-            aux1 = abs(self.coordenadas.posx - x)
-            aux2 = abs(self.coordenadas.posy - y)
-            if(aux1<aux2):
-                while(xablau):
-                    print(self.coordenadas.posx, self.coordenadas.posy)
-                    if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
-                        xablau = False
-                        self.enviar = 2
-                    elif(self.coordenadas.posx > x):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoEsquerda()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoDireita()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoRetornar()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoFrente()
-                    elif(self.coordenadas.posx < x):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoDireita()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoEsquerda()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoFrente()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoRetornar()
-                    elif(self.coordenadas.posy > y):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoRetornar()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoFrente()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoDireita()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoEsquerda()
-                    elif(self.coordenadas.posy < y):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoFrente()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoRetornar()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoEsquerda()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoDireita()
-            else:
-                while(xablau):
-                    print(self.coordenadas.posx, self.coordenadas.posy)
-                    if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
-                        xablau = False
-                        self.enviar = 2
-                    elif(self.coordenadas.posy > y):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoRetornar()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoFrente()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoDireita()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoEsquerda()
-                    elif(self.coordenadas.posy < y):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoFrente()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoRetornar()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoEsquerda()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoDireita()
-                    elif(self.coordenadas.posx > x):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoEsquerda()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoDireita()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoRetornar()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoFrente()
-                    elif(self.coordenadas.posx < x):
-                        if(self.coordenadas.referencia == 'N'):
-                            self.autoDireita()
-                        elif(self.coordenadas.referencia == 'S'):
-                            self.autoEsquerda()
-                        elif(self.coordenadas.referencia == 'L'):
-                            self.autoFrente()
-                        elif(self.coordenadas.referencia == 'O'):
-                            self.autoRetornar()
+        x,y = _lista[0]
+        xablau = True
+        aux1 = abs(self.coordenadas.posx - x)
+        aux2 = abs(self.coordenadas.posy - y)
+        if(aux1<aux2):
+            print(self.coordenadas.posx, self.coordenadas.posy)
+            if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
+                self.enviar = 2
+                time.sleep(2)
+            elif(self.coordenadas.posx > x):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoEsquerda()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoDireita()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoRetornar()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoFrente()
+            elif(self.coordenadas.posx < x):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoDireita()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoEsquerda()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoFrente()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoRetornar()
+            elif(self.coordenadas.posy > y):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoRetornar()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoFrente()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoDireita()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoEsquerda()
+            elif(self.coordenadas.posy < y):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoFrente()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoRetornar()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoEsquerda()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoDireita()
+        else:
+            print(self.coordenadas.posx, self.coordenadas.posy)
+            if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
+                self.enviar = 2
+                time.sleep(2)
+            elif(self.coordenadas.posy > y):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoRetornar()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoFrente()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoDireita()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoEsquerda()
+            elif(self.coordenadas.posy < y):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoFrente()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoRetornar()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoEsquerda()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoDireita()
+            elif(self.coordenadas.posx > x):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoEsquerda()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoDireita()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoRetornar()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoFrente()
+            elif(self.coordenadas.posx < x):
+                if(self.coordenadas.referencia == 'N'):
+                    self.autoDireita()
+                elif(self.coordenadas.referencia == 'S'):
+                    self.autoEsquerda()
+                elif(self.coordenadas.referencia == 'L'):
+                    self.autoFrente()
+                elif(self.coordenadas.referencia == 'O'):
+                    self.autoRetornar()
