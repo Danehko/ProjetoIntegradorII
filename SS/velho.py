@@ -3,9 +3,6 @@ import random
 from recebeSR import *
 from Partida import *
 from comunicaSR import *
-from Comunica_SA import *
-
-argumentos = sys.argv[0:]
 
 print('Sistema Supervisorio - Iniciado')
 print('Bem vindo')
@@ -17,16 +14,34 @@ recebe.start()
 
 while(not recebe.isConnect()):
     pass
-comunica = Comunica_SA('8888', argumentos[1], envia)
-comunica.start()
-comunica.login(recebe.id,recebe.coord)
 envia.autenticar()
 
 condicao = True
-
-
 while(condicao):
+    aux = input('Digite 1 para Criar Partida \nDigite 2 para sair\n')
     if(aux == '1'):
+        tesouro = int(input('Digite o numero de Tesouros:\n'))
+        tipo = int(input('Voce deseja sortear os tessouros? digite (1) ou digite (2) para informar a localização dos tessouros?'))
+        if(tipo==1):
+            contador = 0
+            while (tesouro != contador):
+                x = random.randrange(7)
+                y = random.randrange(7)
+                if (((x, y) in partida._listaDeTesouro) == False):
+                    partida._listaDeTesouro.append((x, y))
+                    contador = contador + 1
+        elif(tipo==2):
+            contador = 0
+            while (tesouro != contador):
+                print('Digite a posicao do tesouro ' + str(contador + 1) + ' de ' + str(tesouro))
+                x = int(input('Por favor insira a coordenada x:'))
+                y = int(input('Por favor insira a coordenada y:'))
+                if (((x, y) in partida._listaDeTesouro) == False):
+                    partida._listaDeTesouro.append((x, y))
+                    contador = contador + 1
+                else:
+                    print('Tesouro ja adicionado')
+
         atualizacao = partida.informarMapa()
         envia.receberAtualização(atualizacao)
         condicao2 = True
@@ -96,5 +111,8 @@ while(condicao):
                     adonis = 0
                     envia.terminarPartida()
                     partida.inicio()
+    elif(aux == '2'):
+       condicao = False
+       recebe.join()
 
 

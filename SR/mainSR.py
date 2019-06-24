@@ -5,7 +5,12 @@ from comunicaSS import *
 from Partida import *
 import sys
 
-argumentos = sys.argv[0:]
+argumentos = sys.argv[0:] 
+
+#argv1=nome
+#argv2=posx
+#argv3=posy
+#argv4=orientação
 
 #print('Robo - Iniciado')
 #print('Bem vindo')

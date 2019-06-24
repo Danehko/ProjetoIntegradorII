@@ -16,6 +16,8 @@ class Recebe_SR(Thread):
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         self.s.connect(p)  # connect to the server
         self.s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
+	self.id = ''
+        self.coord = ''
 
     def run(self):
         self._recebe()
@@ -43,11 +45,11 @@ class Recebe_SR(Thread):
                 print('Tesouro Encontrado')
                 print(len(self.partida._listaDeTesouro))
         elif(dados[1] == '2'):
-            idd = dados[2]
+            self.id = dados[2]
             pos = dados[3].split(',')
-            coord = (int(pos[0]),int(pos[1]))
+            self.coord = (int(pos[0]),int(pos[1]))
             self._connect = True
-            self.partida._localizacaoRobo.append(coord)
+            self.partida._localizacaoRobo.append(self.coord)
 
     def isConnect(self):
         return self._connect
