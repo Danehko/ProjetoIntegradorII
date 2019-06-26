@@ -101,3 +101,6 @@ class Partida:
 
     def isInicio(self):
         return self.status
+
+    def modo(self):
+        return self.modoDeUso

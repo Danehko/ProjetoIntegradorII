@@ -4,7 +4,7 @@ import zmq, sys
 from threading import Thread
 
 class Recebe_SR(Thread):
-    def __init__(self, partida):
+    def __init__(self, partida, comunica):
         super().__init__()
         self._connect = False
         self.partida = partida
@@ -18,6 +18,7 @@ class Recebe_SR(Thread):
         self.s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
 	self.id = ''
         self.coord = ''
+        self.comunica = comunica
 
     def run(self):
         self._recebe()
@@ -32,24 +33,20 @@ class Recebe_SR(Thread):
         dados = mensagem.split(':')
         if(dados[1] == '0'):
             tupla = dados[2].split(',')
-            add = (int(tupla[0]),int(tupla[1]))
-            self.partida._localizacaoRobo = []
-            self.partida._localizacaoRobo.append(add)
+            self.coord  = (int(tupla[0]),int(tupla[1]))
+            self.comunica.try_move(self.coord )
+
         elif(dados[1] == '1'): # valida
             tupla = dados[2].split(',')
-            add = (int(tupla[0]),int(tupla[1]))
-            self.partida._localizacaoRobo = []
-            self.partida._localizacaoRobo.append(add)
-            if add in self.partida._listaDeTesouro:
-                self.partida._listaDeTesouro.remove(add)
+            self.coord  = (int(tupla[0]),int(tupla[1]))
+            if self.coord  in self.partida._listaDeTesouro:
                 print('Tesouro Encontrado')
-                print(len(self.partida._listaDeTesouro))
+                get_flag(self.coord):
         elif(dados[1] == '2'):
             self.id = dados[2]
             pos = dados[3].split(',')
             self.coord = (int(pos[0]),int(pos[1]))
             self._connect = True
-            self.partida._localizacaoRobo.append(self.coord)
 
     def isConnect(self):
         return self._connect

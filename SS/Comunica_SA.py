@@ -6,7 +6,7 @@ import zmq
 # from src.Public import Commands
 
 class Comunica_SA:
-    def __init__(self, port, ip, envia):
+    def __init__(self, port, ip, envia, partida):
         super().__init__()
         self.daemon = True
         self.port = port
@@ -15,6 +15,8 @@ class Comunica_SA:
         self.id = id
         self._thread_run_flag = True  # flag que permite a execucao da thread
         self.envia = envia
+        self.partida = partida
+        self.start = 0
 
         # criacao dos sockets, dealer_socket manda mensagens para o servidor
         # sub_socket recebe mensagens do servidor (mensagens as quais sao enviadas para todos os clientes)
@@ -98,19 +100,25 @@ class Comunica_SA:
             # so recebe essa mensagem uma vez, que eh no inicio da partida
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
-            self.envia
+            self.partida.status = 1
+            self.partida._listaDeTesouro = lista_de_cacas
+            self.envia.iniciarPartida(self.partida.informar())
 
         elif msg.cmd == Commands.UPDATE_MAP:
             # recebe uma lista com a posicao de cada jogador
             # toda vez q um jogador se mexer, essa lista sera atualizada
             mapa_atualizado = msg.data
             print("mapa atualizado", mapa_atualizado)
+            self.partida._localizacaoRobo = mapa_atualizado
+            self.partida.receberAtualização(self.partida.informarMapa())
 
         elif msg.cmd == Commands.UPDATE_FLAGS:
             # recebe a lista de bandeiras atualizadas
             # toda vez que alguem obter uma bandeira, essa lista sera atualizada
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
+            self.partida._listaDeTesouro = lista_de_cacas
+            self.partida.receberAtualização(self.partida.informarMapa())
 
         elif msg.cmd == Commands.MODE:
             # recebe o modo de jogo
@@ -119,13 +127,20 @@ class Comunica_SA:
             # quem define o modo de jogo eh o arbitro
 
             modo_de_jogo = msg.data
-            if modo_de_jogo: print("manual\n")
-            else: print("automatico\n")
-
+            if modo_de_jogo: 
+                print("manual\n")
+                self.partida.modoDeUso = 1
+                self.partida.receberAtualização(self.partida.informarMapa())
+            else: 
+                print("automatico\n")
+                self.partida.modoDeUso = 2
+                self.partida.receberAtualização(self.partida.informarMapa())
         elif msg.cmd == Commands.STOP:
             # metodo para parar a partida
             # nao tem dados
             print("PARA ESSA PORRA DE JOGO, BICHO")
+            self.partida.status = 0
+            self.envia.terminarPartida()
             pass
         else:
             pass
@@ -135,7 +150,6 @@ class Comunica_SA:
         self.daemon = Thread(target=self._recv, name="recebe_mensagens")
         self.daemon.daemon = False
         self.daemon.start()
-
 
 if __name__ == "__main__":
 
