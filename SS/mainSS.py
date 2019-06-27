@@ -80,4 +80,5 @@ while(condicao):
             else:
                 envia.terminarPartida()
                 partida.inicio()
+                print('terminou')
 

@@ -37,11 +37,18 @@ class Recebe_SR(Thread):
             self.comunica.try_move(self.coord )
 
         elif(dados[1] == '1'): # valida
+            dados = mensagem.split(':')
             tupla = dados[2].split(',')
             self.coord  = (int(tupla[0]),int(tupla[1]))
-            if self.coord  in self.partida._listaDeTesouro:
+            print('kiko')
+            print(self.partida._listaDeTesouro)
+            lista = []
+            lista.append(int(tupla[0]))
+            lista.append(int(tupla[1]))
+            print(lista)
+            if lista  in self.partida._listaDeTesouro:
                 print('Tesouro Encontrado')
-                get_flag(self.coord)
+                self.comunica.get_flag(self.coord)
         elif(dados[1] == '2'):
             self.id = dados[2]
             pos = dados[3].split(',')

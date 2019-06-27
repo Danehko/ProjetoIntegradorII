@@ -63,6 +63,7 @@ while(True):
                 comunica.atualizarPos(robot.coordenadas.enviarCoordenadas())
                 robot.enviar = 0
             elif(robot.enviar==2):
+                print('pernalonga')
                 comunica.validarTesouro(robot.coordenadas.enviarCoordenadas())
                 robot.enviar = 0
 

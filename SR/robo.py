@@ -154,7 +154,10 @@ class Robo:
 
     def autoEsquerda(self):
         x, y = self.coordenadas.trocandoPos('esquerda')
-        if(((x,y)in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
+        lista = []
+        lista.append(x)
+        lista.append(y)
+        if ((lista in self.partida._localizacaoRobo) or x<0 or x>(self.partida.tam-1) or y<0 or y>(self.partida.tam-1)):
             pass
         else:
             self.coordenadas.trocarPosicao(x,y)
@@ -164,7 +167,10 @@ class Robo:
 
     def autoDireita(self):
         x, y = self.coordenadas.trocandoPos('direita')
-        if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+        lista = []
+        lista.append(x)
+        lista.append(y)
+        if ((lista in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
             pass
         else:
             self.coordenadas.trocarPosicao(x, y)
@@ -174,7 +180,10 @@ class Robo:
 
     def autoFrente(self):
         x, y = self.coordenadas.trocandoPos('frente')
-        if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+        lista = []
+        lista.append(x)
+        lista.append(y)
+        if ((lista in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
             pass
         else:
             self.coordenadas.trocarPosicao(x, y)
@@ -184,7 +193,10 @@ class Robo:
 
     def autoRetornar(self):
         x, y = self.coordenadas.trocandoPos('retornar')
-        if (((x, y) in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
+        lista = []
+        lista.append(x)
+        lista.append(y)
+        if ((lista in self.partida._localizacaoRobo) or x < 0 or x > (self.partida.tam - 1) or y < 0 or y > (self.partida.tam - 1)):
             pass
         else:
             self.coordenadas.trocarPosicao(x, y)
@@ -200,8 +212,8 @@ class Robo:
         if(aux1<aux2):
             print(self.coordenadas.posx, self.coordenadas.posy)
             if((self.coordenadas.posx == x) and (self.coordenadas.posy == y)):
-                self.enviar = 2
                 time.sleep(2)
+                self.enviar = 2
             elif(self.coordenadas.posx > x):
                 if(self.coordenadas.referencia == 'N'):
                     self.autoEsquerda()
