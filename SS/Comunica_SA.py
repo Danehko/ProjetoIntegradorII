@@ -9,7 +9,7 @@ class Comunica_SA:
     def __init__(self, port, ip, envia, partida):
         super().__init__()
         self.daemon = True
-        self.port = port
+        self.port = int(port)
         self.servers_ip = ip
         self.my_ip = self._get_my_ip()
         self.id = id
@@ -30,8 +30,8 @@ class Comunica_SA:
         self._sub_socket.setsockopt(zmq.LINGER, 0)
 
         # conecta os sockets
-        self._sub_socket.connect("tcp://%s:%d" % (self.servers_ip, port))
-        self.dealer_socket.connect("tcp://%s:%d" % (self.servers_ip, self.port + 1))
+        self._sub_socket.connect("tcp://%s:%d" % (self.servers_ip, self.port))
+        self.dealer_socket.connect("tcp://%s:%d" % (self.servers_ip,self.port + 1))
 
 
     def _get_my_ip(self):
@@ -110,7 +110,7 @@ class Comunica_SA:
             mapa_atualizado = msg.data
             print("mapa atualizado", mapa_atualizado)
             self.partida._localizacaoRobo = mapa_atualizado
-            self.partida.receberAtualização(self.partida.informarMapa())
+            self.envia.receberAtualizacao(self.partida.informarMapa())
 
         elif msg.cmd == Commands.UPDATE_FLAGS:
             # recebe a lista de bandeiras atualizadas
@@ -118,7 +118,7 @@ class Comunica_SA:
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
             self.partida._listaDeTesouro = lista_de_cacas
-            self.partida.receberAtualização(self.partida.informarMapa())
+            self.envia.receberAtualizacao(self.partida.informarMapa())
 
         elif msg.cmd == Commands.MODE:
             # recebe o modo de jogo
@@ -130,11 +130,11 @@ class Comunica_SA:
             if modo_de_jogo: 
                 print("manual\n")
                 self.partida.modoDeUso = 1
-                self.partida.receberAtualização(self.partida.informarMapa())
+                self.envia.receberAtualizacao(self.partida.informarMapa())
             else: 
                 print("automatico\n")
                 self.partida.modoDeUso = 2
-                self.partida.receberAtualização(self.partida.informarMapa())
+                self.envia.receberAtualizacao(self.partida.informarMapa())
         elif msg.cmd == Commands.STOP:
             # metodo para parar a partida
             # nao tem dados
@@ -145,7 +145,7 @@ class Comunica_SA:
         else:
             pass
 
-    def run(self):status
+    def run(self):
         '''Inicia a Thread, a qual ira tratar todas as mensagens Broadcast  do servidor '''
         self.daemon = Thread(target=self._recv, name="recebe_mensagens")
         self.daemon.daemon = False

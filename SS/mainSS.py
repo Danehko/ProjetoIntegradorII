@@ -18,7 +18,7 @@ recebe.start()
 
 while(not recebe.isConnect()):
     pass
-comunica.start()
+comunica.run()
 comunica.login(recebe.id,recebe.coord)
 envia.autenticar()
 condicao = True
@@ -63,7 +63,7 @@ while(condicao):
                 remover = remover - 1
                 if(remover < len(partida._listaDeTesouro)):
                     lixo = partida._listaDeTesouro.pop(remover)
-                    comunica.get_flag(lixo):
+                    comunica.get_flag(lixo)
                     if(len(partida._listaDeTesouro)==0):
                         partida.inicio()
                         partida.zerar()

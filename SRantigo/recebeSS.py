@@ -11,8 +11,8 @@ class Recebe_SS(Thread):
         self.movendo = 'nao'
         context = zmq.Context()
         self.s = context.socket(zmq.SUB)  # create a subscriber socket
-        HOST = "192.168.1.142" #String
-        PORT = "60000" #String
+        HOST = sys.argv[1] if len(sys.argv) > 1 else "192.168.1.142" #String
+        PORT = sys.argv[2] if len(sys.argv) > 2 else "60000" #String
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         self.s.connect(p)  # connect to the server
         self.s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages

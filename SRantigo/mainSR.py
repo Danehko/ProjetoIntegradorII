@@ -3,26 +3,17 @@ from robo import *
 from recebeSS import *
 from comunicaSS import *
 from Partida import *
-import sys
 
-argumentos = sys.argv[0:] 
+print('Robo - Iniciado')
+print('Bem vindo')
+nome = input('Digite o nome do Robo:\n')
 
-#argv1=nome
-#argv2=posx
-#argv3=posy
-#argv4=orientação
-
-#print('Robo - Iniciado')
-#print('Bem vindo')
-#nome = input('Digite o nome do Robo:\n')
-nome = argumentos[1]
-print(nome)
-#print('Lembrando que o mapa do jogo e quadrado (7x7), portanto e somente aceito 0-6')
-#print('Por favor insira a localizacao do Robo')
-#posx = int(input('Eixo x:'))
-#posy = int(input('Eixo y:'))
-#orien = input('Digite a orientacao do Robo \n (N) - Norte \n (S) - Sul \n (L) - Leste \n (O) - Oeste \n' )
-robot = Robo('outA', 'outD', 200, int(argumentos[2]),int(argumentos[3]),argumentos[4])
+print('Lembrando que o mapa do jogo e quadrado (7x7), portanto e somente aceito 0-6')
+print('Por favor insira a localizacao do Robo')
+posx = int(input('Eixo x:'))
+posy = int(input('Eixo y:'))
+orien = input('Digite a orientacao do Robo \n (N) - Norte \n (S) - Sul \n (L) - Leste \n (O) - Oeste \n' )
+robot = Robo('outA', 'outD', 200, posx, posy, orien)
 
 partida = Partida()
 comunica = Comunica_SS()

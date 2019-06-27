@@ -7,9 +7,7 @@ class Comunica_SR:
         context = zmq.Context()
         self.s = context.socket(zmq.PUB)  # create a publisher socket
         HOST = "192.168.1.142"
-        self.ip = HOST
         PORT = "60000"
-        self.porta = PORT
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         self.s.bind(p)  # bind socket to the address
 
@@ -29,7 +27,7 @@ class Comunica_SR:
         msg = ':3:' + direcao
         self.envia(msg)
 
-    def receberAtualizacao(self,atualizacao):  # numero de caça + localização das caça, numero de competidores + localização de competidores
+    def receberAtualização(self,atualizacao):  # numero de caça + localização das caça, numero de competidores + localização de competidores
         msg = ':4:' + atualizacao
         self.envia(msg)
 
@@ -56,6 +54,5 @@ class Comunica_SR:
     def envia(self,msg):
         time.sleep(2)
         msg = str("TIME ")+msg
-        print(msg)
         self.s.send(msg.encode())
 
