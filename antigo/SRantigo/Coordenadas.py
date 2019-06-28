@@ -2,87 +2,87 @@ class Coordenadas:
     def __init__(self,posx,posy,ref):
         self.posx = posx
         self.posy = posy
-        self.ref = ref
-        self.nextRef = 'SR'
+        self.referencia = ref
+        self.proximoRef = 'SR'
         self.habilitarTroca = 0
 
     def enviarCoordenadas(self):
-        return (self.posx, self.posy)
+        return (self.posx,self.posy)
 
     def trocarPosicao(self, x, y):
         if(self.habilitarTroca == 1):
             self.posx = x
             self.posy = y
-            self.ref = self.nextRef
-            self.nextRef = 'SR'
+            self.referencia = self.proximoRef
+            self.proximoRef = 'SR'
             self.habilitarTroca = 0
 
-    def verificandoPos(self, dir): #trocandoPos
+    def trocandoPos(self, dir):
         if(dir=='frente'):
-            if(self.ref=='N'):
-                self.nextRef = self.ref
+            if(self.referencia=='N'):
+                self.proximoRef = self.referencia
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy + 1))
-            elif(self.ref=='S'):
-                self.nextRef = self.ref
+            elif(self.referencia=='S'):
+                self.proximoRef = self.referencia
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy - 1))
-            elif (self.ref == 'L'):
-                self.nextRef = self.ref
+            elif (self.referencia == 'L'):
+                self.proximoRef = self.referencia
                 self.habilitarTroca = 1
                 return((self.posx + 1), self.posy)
-            elif (self.ref == 'O'):
-                self.nextRef = self.ref
+            elif (self.referencia == 'O'):
+                self.proximoRef = self.referencia
                 self.habilitarTroca = 1
                 return((self.posx - 1), self.posy)
         elif(dir=='retornar'):
-            if (self.ref == 'N'):
-                self.nextRef = 'S'
+            if (self.referencia == 'N'):
+                self.proximoRef = 'S'
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy - 1))
-            elif (self.ref == 'S'):
-                self.nextRef = 'N'
+            elif (self.referencia == 'S'):
+                self.proximoRef = 'N'
                 self.habilitarTroca = 1                
                 return(self.posx, (self.posy + 1))
-            elif (self.ref == 'L'):
-                self.nextRef = 'O'
+            elif (self.referencia == 'L'):
+                self.proximoRef = 'O'
                 self.habilitarTroca = 1
                 return((self.posx - 1), self.posy)
-            elif (self.ref == 'O'):
-                self.nextRef = 'L'
+            elif (self.referencia == 'O'):
+                self.proximoRef = 'L'
                 self.habilitarTroca = 1
                 return((self.posx + 1), self.posy)
         elif (dir == 'direita'):
-            if (self.ref == 'N'):
-                self.nextRef = 'L'
+            if (self.referencia == 'N'):
+                self.proximoRef = 'L'
                 self.habilitarTroca = 1
                 return((self.posx + 1), self.posy)
-            elif (self.ref == 'S'):
-                self.nextRef = 'O'
+            elif (self.referencia == 'S'):
+                self.proximoRef = 'O'
                 self.habilitarTroca = 1
                 return((self.posx - 1), self.posy)
-            elif (self.ref == 'L'):
-                self.nextRef = 'S'
+            elif (self.referencia == 'L'):
+                self.proximoRef = 'S'
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy - 1))
-            elif (self.ref == 'O'):
-                self.nextRef = 'N'
+            elif (self.referencia == 'O'):
+                self.proximoRef = 'N'
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy + 1))
         elif (dir == 'esquerda'):
-            if (self.ref == 'N'):
-                self.nextRef = 'O'
+            if (self.referencia == 'N'):
+                self.proximoRef = 'O'
                 self.habilitarTroca = 1
                 return((self.posx - 1), self.posy)
-            elif (self.ref == 'S'):
-                self.nextRef = 'L'
+            elif (self.referencia == 'S'):
+                self.proximoRef = 'L'
                 self.habilitarTroca = 1
                 return((self.posx + 1), self.posy)
-            elif (self.ref == 'L'):
-                self.nextRef = 'N'
+            elif (self.referencia == 'L'):
+                self.proximoRef = 'N'
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy + 1))
-            elif (self.ref == 'O'):
-                self.nextRef = 'S'
+            elif (self.referencia == 'O'):
+                self.proximoRef = 'S'
                 self.habilitarTroca = 1
                 return(self.posx, (self.posy - 1))

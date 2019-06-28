@@ -100,8 +100,13 @@ class Comunica_SA:
             # so recebe essa mensagem uma vez, que eh no inicio da partida
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
-            self.partida.status = 1
-            self.partida._listaDeTesouro = lista_de_cacas
+            self.partida.partidaIniciada = 1
+            aux = 0
+            listaAux = []
+            while(aux!=len(lista_de_cacas)):
+                listaAux.append(tuple(lista_de_cacas[aux]))
+                aux = aux + 1
+            self.partida.listaDeTesouro = listaAux
             self.envia.iniciarPartida(self.partida.informar())
 
         elif msg.cmd == Commands.UPDATE_MAP:
@@ -109,16 +114,26 @@ class Comunica_SA:
             # toda vez q um jogador se mexer, essa lista sera atualizada
             mapa_atualizado = msg.data
             print("mapa atualizado", mapa_atualizado)
-            self.partida._localizacaoRobo = mapa_atualizado
-            self.envia.receberAtualizacao(self.partida.informarMapa())
+            aux = 0
+            listaAux = []
+            while(aux!=len(mapa_atualizado)):
+                listaAux.append(tuple(mapa_atualizado[aux]))
+                aux = aux + 1
+            self.partida.localizacaoRobo = listaAux
+            self.envia.receberAtualizacao(self.partida.informar())
 
         elif msg.cmd == Commands.UPDATE_FLAGS:
             # recebe a lista de bandeiras atualizadas
             # toda vez que alguem obter uma bandeira, essa lista sera atualizada
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
-            self.partida._listaDeTesouro = lista_de_cacas
-            self.envia.receberAtualizacao(self.partida.informarMapa())
+            aux = 0
+            listaAux = []
+            while(aux!=len(lista_de_cacas)):
+                listaAux.append(tuple(lista_de_cacas[aux]))
+                aux = aux + 1
+            self.partida.listaDeTesouro = listaAux
+            self.envia.receberAtualizacao(self.partida.informar())
 
         elif msg.cmd == Commands.MODE:
             # recebe o modo de jogo
@@ -129,17 +144,17 @@ class Comunica_SA:
             modo_de_jogo = msg.data
             if modo_de_jogo: 
                 print("manual\n")
-                self.partida.modoDeUso = 1
-                self.envia.receberAtualizacao(self.partida.informarMapa())
+                self.partida.modoDeJogo = 1
+                self.envia.receberAtualizacao(self.partida.informar())
             else: 
                 print("automatico\n")
-                self.partida.modoDeUso = 2
-                self.envia.receberAtualizacao(self.partida.informarMapa())
+                self.partida.modoDeJogo = 2
+                self.envia.receberAtualizacao(self.partida.informar())
         elif msg.cmd == Commands.STOP:
             # metodo para parar a partida
             # nao tem dados
             print("PARA ESSA PORRA DE JOGO, BICHO")
-            self.partida.status = 0
+            self.partida.partidaIniciada = 0
             self.envia.terminarPartida()
             pass
         else:

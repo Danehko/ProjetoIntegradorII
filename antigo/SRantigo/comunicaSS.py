@@ -1,5 +1,6 @@
-import zmq
-import time
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import zmq, time
 
 class Comunica_SS:
     def __init__(self):
@@ -10,16 +11,16 @@ class Comunica_SS:
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         self.s.bind(p)  # bind socket to the address
 
-    def conectar(self, nome, posx, posy):
-        msg = ':2:' + nome + ':' + str(posx) + ',' + str(posy)
+    def conectar(self, nome, posicao):
+        msg = ':2:' + nome + ':' + str(posicao[0]) + ',' + str(posicao[1])
         self.envia(msg)
         
-    def atualizar(self, posx, posy):
-        msg = ':0:' + str(posx) + ',' + str(posy)
+    def atualizarPos(self,posicao):
+        msg = ':0:' + str(posicao[0]) + ',' + str(posicao[1])
         self.envia(msg)
         
-    def validar(self, posx, posy):
-        msg = ':1:' + str(posx) + ',' + str(posy)
+    def validarTesouro(self,posicao):
+        msg = ':1:' + str(posicao[0]) + ',' + str(posicao[1])
         self.envia(msg)
 
     def envia(self, msg):

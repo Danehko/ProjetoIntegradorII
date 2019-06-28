@@ -1,106 +1,57 @@
 class Partida:
     def __init__(self):
-        self.modoDeUso = 0
-        self._listaDeTesouro = []        # lista com a localização das caças
-        self._localizacaoRobo = []       # lista com a localização dos robos
+        self.modoDeJogo = 0
+        self.listaDeTesouro = []        # lista com a localização das caças
+        self.localizacaoRobo = []       # lista com a localização dos robos
         self.pausa = 0                   # se pausa for igual a 1 o jogo é pausado
-        self.status = 0                 # se inicio for igual 1 o jogo começou
-        self.tam = 7
+        self.partidaIniciada = 0                 # se inicio for igual 1 o jogo começou
 
     def zerar(self):
-        self.modoDeUso = 0
-        self._listaDeTesouro = []      
+        self.listaDeTesouro = []      
         self.pausa = 0                   
-        self.status = 0                 
-        self.tam = 7
+        self.status = 0 
 
     def pause(self):
-        if(self.pausa==0):
+        if (self.pausa == 0):
             self.pausa = 1
-        elif(self.pausa==1):
+        elif (self.pausa == 1):
             self.pausa = 0
 
     def inicio(self):
-        if (self.status == 0):
-            self.status = 1
-        elif (self.status == 1):
-            self.status = 0
-
-    def atualizarMapa(self, tam, _listates, _listaloc, inicio, pausa):
-        self._listaDeTesouro = _listates
-        self._localizacaoRobo = _listaloc
-        self.status = inicio
-        self.pausa = pausa
-        
-    def informarMapa(self):
-        retorno = str(len(self._listaDeTesouro))
-        cont = 0
-        while(cont != len(self._listaDeTesouro)):
-            retorno = retorno + ':' + str(self._listaDeTesouro[cont][0]) + ',' + str(self._listaDeTesouro[cont][1])
-            cont = cont + 1
-        retorno = retorno + ':' + str(len(self._localizacaoRobo))
-        cont = 0
-        while(cont != len(self._localizacaoRobo)):
-            retorno = retorno + ':' + str(self._localizacaoRobo[cont][0]) + ',' + str(self._localizacaoRobo[cont][1])
-            cont = cont + 1
-        return retorno
+        if (self.partidaIniciada == 0):
+            self.partidaIniciada = 1
+        elif (self.partidaIniciada == 1):
+            self.partidaIniciada = 0
 
     def informar(self):
-        retorno = str(self.modoDeUso) + ':'
-        retorno = retorno + str(len(self._listaDeTesouro))
+        retorno = str(self.modoDeJogo) + ':'
+        retorno = retorno + str(len(self.listaDeTesouro))
         cont = 0
-        while(cont != len(self._listaDeTesouro)):
-            retorno = retorno + ':' + str(self._listaDeTesouro[cont][0]) + ',' + str(self._listaDeTesouro[cont][1])
+        while(cont != len(self.listaDeTesouro)):
+            retorno = retorno + ':' + str(self.listaDeTesouro[cont][0]) + ',' + str(self.listaDeTesouro[cont][1])
             cont = cont + 1
-        retorno = retorno + ':' + str(len(self._localizacaoRobo))
+        retorno = retorno + ':' + str(len(self.localizacaoRobo))
         cont = 0
-        while(cont != len(self._localizacaoRobo)):
-            retorno = retorno + ':' + str(self._localizacaoRobo[cont][0]) + ',' + str(self._localizacaoRobo[cont][1])
+        while(cont != len(self.localizacaoRobo)):
+            retorno = retorno + ':' + str(self.localizacaoRobo[cont][0]) + ',' + str(self.localizacaoRobo[cont][1])
             cont = cont + 1
         return retorno
 
     def receber(self,dados):
-        self._listaDeTesouro = []
-        self._localizacaoRobo = []
         dados = dados.split(':')
-        contPos = int(dados[0])
-        cont = 1
-        while (contPos != (cont-1)):
-            print(cont)
-            pos = dados[cont]
-            pos = pos.split(',')
-            self._listaDeTesouro.append((int(pos[0]),int(pos[1])))
-            cont = cont + 1
-        contRobo = int(dados[cont])
-        cont = cont + 1
-        while (cont != len(dados)):
-            pos = dados[cont]
-            pos = pos.split(',')
-            self._localizacaoRobo.append((int(pos[0]),int(pos[1])))
-            cont = cont + 1
-
-    def receberMapa(self,dados):
-        self._listaDeTesouro = []
-        self._localizacaoRobo = []
-        dados = dados.split(':')
-        self.modoDeUso = int(dados[0])
+        self.modoDeJogo = int(dados[0])
         contPos = int(dados[1])
         cont = 2
+        self.listaDeTesouro = []
         while (contPos != (cont - 2)):
             pos = dados[cont]
             pos = pos.split(',')
-            self._listaDeTesouro.append((int(pos[0]),int(pos[1])))
+            self.listaDeTesouro.append((int(pos[0]),int(pos[1])))
             cont = cont + 1
-        contRobo = int(dados[cont])
         cont = cont + 1
+        self.localizacaoRobo = []
         while (cont != len(dados)):
             pos = dados[cont]
             pos = pos.split(',')
-            self._localizacaoRobo.append((int(pos[0]),int(pos[1])))
+            self.localizacaoRobo.append((int(pos[0]),int(pos[1])))
             cont = cont + 1
-
-    def isInicio(self):
-        return self.status
-
-    def modo(self):
-        return self.modoDeUso

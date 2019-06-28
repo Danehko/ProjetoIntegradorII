@@ -1,13 +1,14 @@
-import zmq
-import time
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import zmq, time
 
 class Comunica_SR:
     def __init__(self):
         context = zmq.Context()
         self.s = context.socket(zmq.PUB)  # create a publisher socket
-        self.ip = "192.168.1.142"
-        self.porta = "60000"
-        p = "tcp://" + self.ip + ":" + self.porta  # how and where to communicate
+        HOST = "192.168.1.142"
+        PORT = "60000"
+        p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         self.s.bind(p)  # bind socket to the address
 
     def naoAutenticar(self):
@@ -26,7 +27,7 @@ class Comunica_SR:
         msg = ':3:' + direcao
         self.envia(msg)
 
-    def receberAtualizacao(self,atualizacao):  # numero de caça + localização das caça, numero de competidores + localização de competidores
+    def receberAtualização(self,atualizacao):  # numero de caça + localização das caça, numero de competidores + localização de competidores
         msg = ':4:' + atualizacao
         self.envia(msg)
 
@@ -53,6 +54,5 @@ class Comunica_SR:
     def envia(self,msg):
         time.sleep(2)
         msg = str("TIME ")+msg
-        print(msg)
         self.s.send(msg.encode())
 
