@@ -6,17 +6,15 @@ import zmq
 # from src.Public import Commands
 
 class Comunica_SA:
-    def __init__(self, port, ip, envia, partida):
+    def __init__(self, port, ip):
         super().__init__()
         self.daemon = True
-        self.port = int(port)
+
+        self.port = port
         self.servers_ip = ip
         self.my_ip = self._get_my_ip()
         self.id = id
         self._thread_run_flag = True  # flag que permite a execucao da thread
-        self.envia = envia
-        self.partida = partida
-        self.start = 0
 
         # criacao dos sockets, dealer_socket manda mensagens para o servidor
         # sub_socket recebe mensagens do servidor (mensagens as quais sao enviadas para todos os clientes)
@@ -30,8 +28,8 @@ class Comunica_SA:
         self._sub_socket.setsockopt(zmq.LINGER, 0)
 
         # conecta os sockets
-        self._sub_socket.connect("tcp://%s:%d" % (self.servers_ip, self.port))
-        self.dealer_socket.connect("tcp://%s:%d" % (self.servers_ip,self.port + 1))
+        self._sub_socket.connect("tcp://%s:%d" % (self.servers_ip, port))
+        self.dealer_socket.connect("tcp://%s:%d" % (self.servers_ip, self.port + 1))
 
 
     def _get_my_ip(self):
@@ -100,40 +98,18 @@ class Comunica_SA:
             # so recebe essa mensagem uma vez, que eh no inicio da partida
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
-            self.partida.partidaIniciada = 1
-            aux = 0
-            listaAux = []
-            while(aux!=len(lista_de_cacas)):
-                listaAux.append(tuple(lista_de_cacas[aux]))
-                aux = aux + 1
-            self.partida.listaDeTesouro = listaAux
-            self.envia.iniciarPartida(self.partida.informar())
 
         elif msg.cmd == Commands.UPDATE_MAP:
             # recebe uma lista com a posicao de cada jogador
             # toda vez q um jogador se mexer, essa lista sera atualizada
             mapa_atualizado = msg.data
             print("mapa atualizado", mapa_atualizado)
-            aux = 0
-            listaAux = []
-            while(aux!=len(mapa_atualizado)):
-                listaAux.append(tuple(mapa_atualizado[aux]))
-                aux = aux + 1
-            self.partida.localizacaoRobo = listaAux
-            self.envia.receberAtualizacao(self.partida.informar())
 
         elif msg.cmd == Commands.UPDATE_FLAGS:
             # recebe a lista de bandeiras atualizadas
             # toda vez que alguem obter uma bandeira, essa lista sera atualizada
             lista_de_cacas = msg.data
             print("lista de cacas ", lista_de_cacas)
-            aux = 0
-            listaAux = []
-            while(aux!=len(lista_de_cacas)):
-                listaAux.append(tuple(lista_de_cacas[aux]))
-                aux = aux + 1
-            self.partida.listaDeTesouro = listaAux
-            self.envia.receberAtualizacao(self.partida.informar())
 
         elif msg.cmd == Commands.MODE:
             # recebe o modo de jogo
@@ -142,24 +118,16 @@ class Comunica_SA:
             # quem define o modo de jogo eh o arbitro
 
             modo_de_jogo = msg.data
-            if modo_de_jogo: 
-                print("manual\n")
-                self.partida.modoDeJogo = 1
-                self.envia.receberAtualizacao(self.partida.informar())
-            else: 
-                print("automatico\n")
-                self.partida.modoDeJogo = 2
-                self.envia.receberAtualizacao(self.partida.informar())
+            if modo_de_jogo: print("manual\n")
+            else: print("automatico\n")
+
         elif msg.cmd == Commands.STOP:
             # metodo para parar a partida
             # nao tem dados
             print("PARA ESSA PORRA DE JOGO, BICHO")
-            self.partida.partidaIniciada = 0
-            self.envia.terminarPartida()
             pass
 
-        elif msg.cmd == Commands.STATUS_GET_FLAG:
-            self.envia.confirmarTesouro() 
+        elif msg.cmd == Commands.STATUS_GET_FLAG: 
             # alguma coisa 
         else:
             pass
@@ -170,6 +138,7 @@ class Comunica_SA:
         self.daemon.daemon = False
         self.daemon.start()
 
+
 if __name__ == "__main__":
 
     # cria objeto e inicia thread
@@ -177,12 +146,12 @@ if __name__ == "__main__":
     com.run()
 
     # testa login
-    #com.login('Id de TESTE', (self.loc[0],self.loc[1])) # id do robo e posicao inicial
+    com.login("ID de teste", (-1,-1)) # id do robo e posicao inicial
     # tem que da o start no auditor para que ele envie a lista de cacas
     # dai eh so digitar uma caca da lista pra testar
     # vai ficar meio bugado pq vai ter duas threads escrevendo no mesmo terminal
-    #coord = int(input("\nX: ")), int(input("Y: "))
-    #com.get_flag(coord)
+    coord = int(input("\nX: ")), int(input("Y: "))
+    com.get_flag(coord)
 
     # testa mover
-    #com.try_move((0,2))
+    com.try_move((0,2))

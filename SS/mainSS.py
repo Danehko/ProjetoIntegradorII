@@ -68,10 +68,8 @@ while(condicao):
                 else:
                     print('Tesouro inexistente')
     elif(partida.partidaIniciada==1 and partida.modoDeJogo == 2):
-        inicio = partida.informar()
-        envia.iniciarPartida(inicio)
         while(partida.partidaIniciada == 1):
-            atualizacao = partida.informarMapa()
+            atualizacao = partida.informar()
             if(len(partida.listaDeTesouro)!=0):
                 envia.receberAtualizacao(atualizacao)
             else:

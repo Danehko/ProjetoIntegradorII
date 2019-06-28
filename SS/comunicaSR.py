@@ -52,7 +52,7 @@ class Comunica_SR:
 
     def envia(self,msg):
         time.sleep(2)
-        msg = str("TIME ")+msg
+        msg = str("STATUS ")+msg
         print(msg)
         self.s.send(msg.encode())
 

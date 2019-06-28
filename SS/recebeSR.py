@@ -10,7 +10,7 @@ class Recebe_SR(Thread):
         PORT = "50000" #String
         p = "tcp://" + HOST + ":" + PORT  # how and where to communicate
         self.s.connect(p)  # connect to the server
-        self.s.setsockopt(zmq.SUBSCRIBE, b"TIME")  # subscribe to TIME messages
+        self.s.setsockopt(zmq.SUBSCRIBE, b"STATUS")  # subscribe to TIME messages
         self.comunica = comunica
         self.partida = partida
         self.connect = False
